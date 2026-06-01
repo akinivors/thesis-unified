@@ -1,0 +1,22 @@
+[
+  {
+    "phase": 1,
+    "n_docs": 100000,
+    "crossover_selectivity": 0.075
+  },
+  {
+    "phase": 2,
+    "n_docs": 200000,
+    "crossover_selectivity": 0.08
+  },
+  {
+    "phase": 3,
+    "n_docs": 300000,
+    "crossover_selectivity": 0.04499999999999999
+  },
+  {
+    "phase": 4,
+    "n_docs": 388000,
+    "crossover_selectivity": null
+  }
+]
