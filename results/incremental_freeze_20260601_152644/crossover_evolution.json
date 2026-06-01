@@ -1,0 +1,30 @@
+[
+  {
+    "phase": 1,
+    "n_docs": 100000,
+    "crossover_selectivity": 0.22999999999999995,
+    "queries_to_freeze": 280,
+    "is_frozen": true
+  },
+  {
+    "phase": 2,
+    "n_docs": 200000,
+    "crossover_selectivity": 0.18999999999999997,
+    "queries_to_freeze": 292,
+    "is_frozen": true
+  },
+  {
+    "phase": 3,
+    "n_docs": 300000,
+    "crossover_selectivity": 0.05,
+    "queries_to_freeze": 295,
+    "is_frozen": true
+  },
+  {
+    "phase": 4,
+    "n_docs": 388000,
+    "crossover_selectivity": 0.18999999999999997,
+    "queries_to_freeze": 404,
+    "is_frozen": true
+  }
+]

@@ -39,6 +39,7 @@ class SoftCliffReward:
         r_target: float = config.CBO_R_TARGET,
         l_max: float = config.CBO_L_MAX,
         beta: float = config.CBO_BETA,
+        margin: float = config.CBO_RECALL_MARGIN,
     ) -> None:
         if r_target <= 0.0 or r_target > 1.0:
             raise ValueError(f"r_target must be in (0, 1], got {r_target}")
@@ -50,6 +51,7 @@ class SoftCliffReward:
         self.r_target = r_target
         self.l_max = l_max
         self.beta = beta
+        self.margin = margin
 
     def compute(self, latency_ms: float, recall: float) -> float:
         """Compute the Soft Cliff SLA reward.
@@ -70,14 +72,18 @@ class SoftCliffReward:
         -------
         ``L_norm = max(0, 1 - latency_ms / L_max)``
 
-        If ``recall >= r_target``::
+        If ``recall < r_target - margin``:
+            reward = 0.0             (hard penalty)
 
+        If ``recall >= r_target``:
             reward = L_norm          (pure speed reward)
 
-        If ``recall < r_target``::
-
+        If ``r_target - margin <= recall < r_target``:
             reward = L_norm * (recall / r_target) ** beta
         """
+        if recall < self.r_target - self.margin:
+            return 0.0
+
         l_norm = max(0.0, 1.0 - latency_ms / self.l_max)
 
         if recall >= self.r_target:
@@ -89,6 +95,6 @@ class SoftCliffReward:
 
     def __repr__(self) -> str:
         return (
-            f"SoftCliffReward(r_target={self.r_target}, "
+            f"SoftCliffReward(r_target={self.r_target}, margin={self.margin}, "
             f"l_max={self.l_max}, beta={self.beta})"
         )

@@ -5,7 +5,7 @@ import config
 
 def get_latest_incremental_dir() -> Path:
     dirs = [d for d in config.RESULTS_DIR.iterdir()
-            if d.is_dir() and d.name.startswith("incremental_crossover_")]
+            if d.is_dir() and d.name.startswith("incremental_freeze_")]
     if not dirs:
         return None
     return sorted(dirs)[-1]
@@ -52,7 +52,7 @@ def generate_incremental_plot():
 
     plt.title("Crossover Selectivity vs Corpus Size", pad=15, fontweight="bold")
     plt.xlabel("Corpus Size (Number of Documents)")
-    plt.ylabel("Crossover Selectivity (IDSelector wins below)")
+    plt.ylabel("Crossover Selectivity (Brute Force wins below)")
     plt.ylim(0, max(crossovers) * 1.2 if max(crossovers) > 0 else 0.1)
     
     # Add data labels

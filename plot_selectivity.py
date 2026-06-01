@@ -13,7 +13,7 @@ import config
 
 def get_latest_results_dir() -> Path:
     dirs = [d for d in config.RESULTS_DIR.iterdir()
-            if d.is_dir() and d.name.startswith("main_200k_")]
+            if d.is_dir() and d.name.startswith("main_freeze_")]
     if not dirs:
         return None
     return sorted(dirs)[-1]
@@ -25,7 +25,7 @@ def generate_selectivity_plots():
         print("Error: No main benchmark results found.")
         return
 
-    csv_path = res_dir / "phase_1_selectivity.csv"
+    csv_path = res_dir / "phase_1_selectivity_frozen.csv"
     if not csv_path.exists():
         print(f"Error: {csv_path} not found in {res_dir}")
         return
@@ -58,7 +58,7 @@ def generate_selectivity_plots():
     # ── Latency ──────────────────────────────────────────────────
     ax_lat.plot(sel, df["bitmap_bf_latency_ms"], "s-",
                 color=colors["bf"], linewidth=1.5, alpha=0.5,
-                markersize=4, label="Bitmap (BF)")
+                markersize=4, label="Bitmap (Brute Force)")
     ax_lat.plot(sel, df["idsel_latency_ms"], "D-",
                 color=colors["idsel"], linewidth=1.5, alpha=0.6,
                 markersize=4, label="IDSelector")
@@ -67,7 +67,7 @@ def generate_selectivity_plots():
                 markersize=4, label="PostFilter")
     ax_lat.plot(sel, df["cbo_latency_ms"], "o-",
                 color=colors["cbo"], linewidth=2.5, markersize=6,
-                label="CBO", zorder=5)
+                label="Frozen CBO", zorder=5)
 
     ax_lat.axhline(config.CBO_L_MAX, color="red", linestyle="--",
                    linewidth=1.2, alpha=0.7, label=f"L_MAX ({config.CBO_L_MAX}ms)")
@@ -81,7 +81,7 @@ def generate_selectivity_plots():
     # ── Recall ───────────────────────────────────────────────────
     ax_rec.plot(sel, df["bitmap_bf_recall"] * 100, "s-",
                 color=colors["bf"], linewidth=1.5, alpha=0.5,
-                markersize=4, label="Bitmap (BF)")
+                markersize=4, label="Bitmap (Brute Force)")
     ax_rec.plot(sel, df["idsel_recall"] * 100, "D-",
                 color=colors["idsel"], linewidth=1.5, alpha=0.6,
                 markersize=4, label="IDSelector")
@@ -90,7 +90,7 @@ def generate_selectivity_plots():
                 markersize=4, label="PostFilter")
     ax_rec.plot(sel, df["cbo_recall"] * 100, "o-",
                 color=colors["cbo"], linewidth=2.5, markersize=6,
-                label="CBO", zorder=5)
+                label="Frozen CBO", zorder=5)
 
     ax_rec.axhline(config.CBO_R_TARGET * 100, color="red",
                    linestyle="--", linewidth=1.2, alpha=0.7,

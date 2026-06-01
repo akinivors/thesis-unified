@@ -147,6 +147,25 @@ class QTable:
                         self.Q[new_i][arm] = acc[arm] / acc["q_count"]
                     self.N[new_i] = acc["n_sum"]
 
+    def check_freeze_condition(self, min_visits: int = config.CBO_FREEZE_MIN_VISITS) -> float | None:
+        """Check if adjacent buckets show a stable crossover point."""
+        with self._lock:
+            for i in range(len(self.buckets) - 1):
+                q_i = self.Q[i]
+                q_next = self.Q[i+1]
+                n_i = self.N[i]
+                n_next = self.N[i+1]
+
+                if n_i >= min_visits and n_next >= min_visits:
+                    diff_i = q_i[self.ARMS[0]] - q_i[self.ARMS[1]]
+                    diff_next = q_next[self.ARMS[0]] - q_next[self.ARMS[1]]
+
+                    # Flip from bitmap_prefilter > post_filter to post_filter > bitmap_prefilter
+                    if diff_i > 0 and diff_next < 0:
+                        # The boundary between bucket i and i+1 is the crossover point
+                        return self.buckets[i][1]
+            return None
+
     def get_snapshot(self) -> List[Dict]:
         with self._lock:
             return [
