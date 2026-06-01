@@ -1,0 +1,290 @@
+{
+  "1pct": {
+    "sample_ratio": 0.01,
+    "sample_size": 3880,
+    "build_time_ms": 52.84,
+    "aggregate": {
+      "n_filters": 429,
+      "mae": 0.005348,
+      "mape_pct": 3.8,
+      "max_abs_error": 0.025163,
+      "median_abs_error": 0.00452,
+      "mean_estimation_us": 1.83,
+      "median_estimation_us": 1.33,
+      "p99_estimation_us": 10.24
+    },
+    "by_selectivity_range": {
+      "0-10%": {
+        "mae": 0.001666,
+        "n_filters": 144
+      },
+      "10-20%": {
+        "mae": 0.00553,
+        "n_filters": 96
+      },
+      "20-30%": {
+        "mae": 0.007478,
+        "n_filters": 80
+      },
+      "30-50%": {
+        "mae": 0.008613,
+        "n_filters": 73
+      },
+      "50-70%": {
+        "mae": 0.008202,
+        "n_filters": 18
+      },
+      "70-100%": {
+        "mae": 0.00828,
+        "n_filters": 18
+      }
+    },
+    "by_filter_type": {
+      "compound": {
+        "mae": 0.005239,
+        "n_filters": 58
+      },
+      "in_set": {
+        "mae": 0.006676,
+        "n_filters": 260
+      },
+      "range": {
+        "mae": 0.010304,
+        "n_filters": 8
+      },
+      "single": {
+        "mae": 0.001673,
+        "n_filters": 103
+      }
+    },
+    "predictor_stats": {
+      "N_at_build": 388058,
+      "sample_size": 3880,
+      "sample_ratio": 0.01,
+      "rebuild_threshold": 0.3,
+      "n_fields": 4,
+      "field_cardinalities": {
+        "main_cat": 28,
+        "brand": 292,
+        "overall": 5,
+        "verified": 2
+      }
+    }
+  },
+  "3pct": {
+    "sample_ratio": 0.03,
+    "sample_size": 11641,
+    "build_time_ms": 11.5,
+    "aggregate": {
+      "n_filters": 429,
+      "mae": 0.002757,
+      "mape_pct": 2.15,
+      "max_abs_error": 0.011633,
+      "median_abs_error": 0.001763,
+      "mean_estimation_us": 3.78,
+      "median_estimation_us": 2.67,
+      "p99_estimation_us": 13.7
+    },
+    "by_selectivity_range": {
+      "0-10%": {
+        "mae": 0.000821,
+        "n_filters": 144
+      },
+      "10-20%": {
+        "mae": 0.003744,
+        "n_filters": 96
+      },
+      "20-30%": {
+        "mae": 0.003587,
+        "n_filters": 80
+      },
+      "30-50%": {
+        "mae": 0.004597,
+        "n_filters": 73
+      },
+      "50-70%": {
+        "mae": 0.002321,
+        "n_filters": 18
+      },
+      "70-100%": {
+        "mae": 0.002254,
+        "n_filters": 18
+      }
+    },
+    "by_filter_type": {
+      "compound": {
+        "mae": 0.001449,
+        "n_filters": 58
+      },
+      "in_set": {
+        "mae": 0.003821,
+        "n_filters": 260
+      },
+      "range": {
+        "mae": 0.002228,
+        "n_filters": 8
+      },
+      "single": {
+        "mae": 0.000848,
+        "n_filters": 103
+      }
+    },
+    "predictor_stats": {
+      "N_at_build": 388058,
+      "sample_size": 11641,
+      "sample_ratio": 0.03,
+      "rebuild_threshold": 0.3,
+      "n_fields": 4,
+      "field_cardinalities": {
+        "main_cat": 29,
+        "brand": 421,
+        "overall": 5,
+        "verified": 2
+      }
+    }
+  },
+  "5pct": {
+    "sample_ratio": 0.05,
+    "sample_size": 19402,
+    "build_time_ms": 18.13,
+    "aggregate": {
+      "n_filters": 429,
+      "mae": 0.002049,
+      "mape_pct": 1.64,
+      "max_abs_error": 0.008266,
+      "median_abs_error": 0.001318,
+      "mean_estimation_us": 3.88,
+      "median_estimation_us": 2.58,
+      "p99_estimation_us": 14.38
+    },
+    "by_selectivity_range": {
+      "0-10%": {
+        "mae": 0.000649,
+        "n_filters": 144
+      },
+      "10-20%": {
+        "mae": 0.002592,
+        "n_filters": 96
+      },
+      "20-30%": {
+        "mae": 0.002816,
+        "n_filters": 80
+      },
+      "30-50%": {
+        "mae": 0.003156,
+        "n_filters": 73
+      },
+      "50-70%": {
+        "mae": 0.002847,
+        "n_filters": 18
+      },
+      "70-100%": {
+        "mae": 0.001655,
+        "n_filters": 18
+      }
+    },
+    "by_filter_type": {
+      "compound": {
+        "mae": 0.001528,
+        "n_filters": 58
+      },
+      "in_set": {
+        "mae": 0.002734,
+        "n_filters": 260
+      },
+      "range": {
+        "mae": 0.00222,
+        "n_filters": 8
+      },
+      "single": {
+        "mae": 0.0006,
+        "n_filters": 103
+      }
+    },
+    "predictor_stats": {
+      "N_at_build": 388058,
+      "sample_size": 19402,
+      "sample_ratio": 0.05,
+      "rebuild_threshold": 0.3,
+      "n_fields": 4,
+      "field_cardinalities": {
+        "main_cat": 31,
+        "brand": 487,
+        "overall": 5,
+        "verified": 2
+      }
+    }
+  },
+  "10pct": {
+    "sample_ratio": 0.1,
+    "sample_size": 38805,
+    "build_time_ms": 35.05,
+    "aggregate": {
+      "n_filters": 429,
+      "mae": 0.000986,
+      "mape_pct": 0.87,
+      "max_abs_error": 0.00702,
+      "median_abs_error": 0.000745,
+      "mean_estimation_us": 3.61,
+      "median_estimation_us": 2.54,
+      "p99_estimation_us": 15.1
+    },
+    "by_selectivity_range": {
+      "0-10%": {
+        "mae": 0.000479,
+        "n_filters": 144
+      },
+      "10-20%": {
+        "mae": 0.000874,
+        "n_filters": 96
+      },
+      "20-30%": {
+        "mae": 0.001327,
+        "n_filters": 80
+      },
+      "30-50%": {
+        "mae": 0.001401,
+        "n_filters": 73
+      },
+      "50-70%": {
+        "mae": 0.0018,
+        "n_filters": 18
+      },
+      "70-100%": {
+        "mae": 0.001624,
+        "n_filters": 18
+      }
+    },
+    "by_filter_type": {
+      "compound": {
+        "mae": 0.001283,
+        "n_filters": 58
+      },
+      "in_set": {
+        "mae": 0.00112,
+        "n_filters": 260
+      },
+      "range": {
+        "mae": 0.002134,
+        "n_filters": 8
+      },
+      "single": {
+        "mae": 0.000391,
+        "n_filters": 103
+      }
+    },
+    "predictor_stats": {
+      "N_at_build": 388058,
+      "sample_size": 38805,
+      "sample_ratio": 0.1,
+      "rebuild_threshold": 0.3,
+      "n_fields": 4,
+      "field_cardinalities": {
+        "main_cat": 33,
+        "brand": 569,
+        "overall": 5,
+        "verified": 2
+      }
+    }
+  }
+}

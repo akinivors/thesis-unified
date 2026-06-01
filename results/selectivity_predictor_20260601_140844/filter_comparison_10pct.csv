@@ -1,0 +1,430 @@
+filter_name,filter_type,true_selectivity,estimated_selectivity,absolute_error,relative_error_pct,estimation_time_us
+main_cat='Automotive',single,0.00117,0.001031,0.000139,11.89,0.29
+"main_cat='Arts, Crafts & Sewing'",single,0.001368,0.001392,2.3e-05,1.7,0.29
+main_cat='Amazon Home',single,0.001438,0.001288,0.000149,10.39,0.29
+main_cat='Portable Audio &amp; Accessories',single,0.001453,0.00134,0.000113,7.8,0.33
+main_cat='Health & Personal Care',single,0.00166,0.001572,8.8e-05,5.28,0.29
+brand='Allsop',single,0.002113,0.001881,0.000232,10.97,0.25
+brand='Gam3Gear',single,0.002126,0.001804,0.000322,15.15,0.29
+brand='C2G/Cables To Go',single,0.002162,0.002397,0.000235,10.85,0.29
+brand='Domke',single,0.002247,0.002397,0.00015,6.65,0.25
+brand='JBL',single,0.00226,0.0025,0.00024,10.61,0.25
+brand='APC',single,0.002306,0.002216,9e-05,3.91,0.29
+brand='Apple',single,0.002309,0.002268,4.1e-05,1.78,0.29
+brand='Mighty Bright',single,0.002412,0.00201,0.000402,16.66,0.25
+brand='Polaroid',single,0.002466,0.002294,0.000173,7.0,0.29
+brand='Epartsdom',single,0.002474,0.002422,5.1e-05,2.08,0.29
+brand='Gardner Bender',single,0.002538,0.002422,0.000116,4.57,0.29
+brand='OP/TECH USA',single,0.002559,0.002448,0.000111,4.33,0.25
+brand='Acoustic Research',single,0.002621,0.002319,0.000301,11.5,0.29
+brand='Philips',single,0.002811,0.00268,0.000131,4.67,0.29
+brand='Tivoli Audio',single,0.002814,0.002886,7.2e-05,2.57,0.25
+brand='Wiremold',single,0.002866,0.003273,0.000407,14.21,0.29
+brand='National Hardware',single,0.002961,0.002629,0.000332,11.23,0.25
+brand='Uniden',single,0.002966,0.002783,0.000183,6.17,0.25
+brand='AVerMedia',single,0.003012,0.003299,0.000286,9.5,0.29
+brand='Rio',single,0.003036,0.002989,4.6e-05,1.53,0.25
+brand='JLAB',single,0.003064,0.003041,2.3e-05,0.75,0.29
+brand='Adesso',single,0.003213,0.003505,0.000291,9.06,0.29
+brand='Targus',single,0.003347,0.003144,0.000204,6.08,0.25
+brand='Green Leaf',single,0.003407,0.003299,0.000108,3.18,0.29
+brand='Motorola',single,0.003595,0.003788,0.000193,5.38,0.29
+brand='VideoSecu',single,0.003688,0.003479,0.000209,5.66,0.29
+brand='Rolodex',single,0.003878,0.003608,0.000271,6.97,0.29
+main_cat='Sports &amp; Outdoors',single,0.004038,0.004046,8e-06,0.19,0.29
+brand='Kingston',single,0.004172,0.004561,0.000389,9.33,0.29
+brand='Visit Amazon's Ava Miles Page',single,0.004448,0.004845,0.000397,8.92,0.29
+brand='Coby',single,0.004499,0.005257,0.000758,16.84,0.25
+brand='Kodak',single,0.004809,0.004664,0.000144,3.0,0.29
+brand='Brother',single,0.004948,0.004896,5.1e-05,1.04,0.25
+brand='Pioneer',single,0.004997,0.005515,0.000518,10.37,0.29
+brand='Klipsch',single,0.005306,0.005231,7.5e-05,1.41,0.25
+brand='SANOXY',single,0.005324,0.005386,6.2e-05,1.16,0.29
+brand='Fellowes',single,0.005476,0.005824,0.000348,6.36,0.29
+brand='Midland',single,0.005551,0.005618,6.7e-05,1.21,0.29
+brand='Terk',single,0.005564,0.005644,8e-05,1.44,0.29
+brand='Sangean',single,0.005589,0.005876,0.000286,5.12,0.25
+brand='DTOL',single,0.005698,0.005824,0.000126,2.22,0.29
+brand='Plantronics',single,0.005716,0.006082,0.000366,6.4,0.29
+brand='Microsoft',single,0.005754,0.006107,0.000353,6.14,0.29
+main_cat='Tools & Home Improvement' AND overall>=5.0,compound,0.005842,0.005747,9.5e-05,1.63,1.42
+main_cat='Tools &amp; Home Improvement' AND overall>=4.0,compound,0.005942,0.006236,0.000294,4.95,1.5
+brand='Barnes &amp; Noble',single,0.005945,0.00585,9.5e-05,1.6,0.29
+brand='SanDisk',single,0.006146,0.006107,3.9e-05,0.63,0.29
+main_cat='Cell Phones & Accessories' AND overall>=4.0,compound,0.006167,0.005798,0.000368,5.97,1.62
+main_cat='Car Electronics' AND overall>=5.0,compound,0.006406,0.006752,0.000345,5.39,1.42
+main_cat='Tools &amp; Home Improvement' AND overall>=3.0,compound,0.006597,0.0067,0.000103,1.56,6.17
+brand='Creative',single,0.006674,0.007112,0.000438,6.57,0.29
+brand='Garmin',single,0.006757,0.007009,0.000253,3.74,0.25
+brand='Cobra',single,0.006777,0.006752,2.6e-05,0.38,0.29
+main_cat='Tools & Home Improvement' AND overall>=4.0,compound,0.006816,0.006881,6.5e-05,0.95,1.58
+main_cat='Cell Phones & Accessories' AND overall>=3.0,compound,0.006976,0.006881,9.5e-05,1.36,6.04
+brand='RCA',single,0.006981,0.007757,0.000776,11.11,0.25
+brand='Olympus',single,0.007053,0.006958,9.5e-05,1.35,0.25
+main_cat='Cell Phones &amp; Accessories' AND overall>=4.0,compound,0.007079,0.008066,0.000987,13.94,1.71
+brand='Audio-Technica',single,0.007087,0.006777,0.000309,4.36,0.25
+main_cat='Tools & Home Improvement' AND overall>=3.0,compound,0.007218,0.007396,0.000178,2.47,6.08
+brand='Cyber Acoustics',single,0.007509,0.007654,0.000144,1.92,0.29
+brand='Verbatim',single,0.007548,0.006803,0.000745,9.86,0.29
+main_cat='Sports & Outdoors' AND overall>=5.0,compound,0.007548,0.007679,0.000132,1.74,1.5
+main_cat='Tools &amp; Home Improvement',single,0.007648,0.007473,0.000175,2.29,0.29
+brand='Bose',single,0.0078,0.007576,0.000224,2.87,0.29
+main_cat='Tools & Home Improvement',single,0.007901,0.008092,0.000191,2.42,0.29
+brand='Monster',single,0.007919,0.00737,0.000549,6.93,0.29
+main_cat='Cell Phones &amp; Accessories' AND overall>=3.0,compound,0.008128,0.009406,0.001278,15.73,6.33
+brand='Fujifilm',single,0.008205,0.008659,0.000454,5.53,0.29
+main_cat='Car Electronics' AND overall>=4.0,compound,0.008318,0.008633,0.000315,3.78,1.54
+main_cat='Office Products' AND overall>=5.0,compound,0.008927,0.008427,0.0005,5.6,1.46
+main_cat='Cell Phones & Accessories',single,0.008942,0.008581,0.000361,4.03,0.33
+main_cat='Books' AND overall>=5.0,compound,0.008942,0.009921,0.000979,10.95,1.5
+main_cat='Car Electronics' AND overall>=3.0,compound,0.009081,0.009432,0.000351,3.86,6.25
+brand='Polk Audio',single,0.009133,0.009561,0.000428,4.69,0.25
+brand='Memorex',single,0.009377,0.009535,0.000157,1.68,0.25
+brand='D-Link',single,0.00997,0.009715,0.000255,2.56,0.25
+main_cat='Sports & Outdoors' AND overall>=4.0,compound,0.010233,0.010308,7.5e-05,0.73,1.58
+brand='Kensington',single,0.010267,0.009921,0.000345,3.36,0.29
+main_cat='Car Electronics',single,0.010602,0.011107,0.000505,4.77,0.25
+brand='TRENDnet',single,0.010632,0.010617,1.5e-05,0.14,0.25
+main_cat='Cell Phones &amp; Accessories',single,0.010949,0.012215,0.001266,11.56,0.33
+main_cat='Office Products' AND overall>=4.0,compound,0.010949,0.010024,0.000925,8.45,1.87
+main_cat='Sports & Outdoors' AND overall>=3.0,compound,0.011418,0.011365,5.4e-05,0.47,6.25
+main_cat='Office Products' AND overall>=3.0,compound,0.011846,0.01103,0.000817,6.89,5.88
+main_cat='Books' AND overall>=4.0,compound,0.012166,0.01304,0.000874,7.18,1.71
+brand='3M',single,0.012266,0.012601,0.000335,2.73,0.29
+brand='Celestron',single,0.012524,0.012833,0.000309,2.47,0.29
+main_cat='Office Products',single,0.013135,0.01255,0.000585,4.45,0.29
+main_cat='Sports & Outdoors',single,0.0133,0.0134,0.000101,0.76,0.29
+main_cat='Books' AND overall>=3.0,compound,0.013328,0.014483,0.001155,8.66,6.29
+brand='Logitech',single,0.014006,0.013478,0.000528,3.77,0.29
+brand='NETGEAR',single,0.014348,0.014534,0.000186,1.3,0.25
+brand='Case Logic',single,0.014493,0.012473,0.00202,13.94,0.25
+main_cat='Books',single,0.014555,0.015668,0.001114,7.65,0.37
+brand='Bushnell',single,0.016297,0.016441,0.000145,0.89,0.29
+brand='Linksys',single,0.018866,0.018632,0.000234,1.24,0.29
+brand='Sennheiser',single,0.020136,0.020126,1e-05,0.05,0.29
+brand='C2G',single,0.02076,0.019946,0.000814,3.92,0.29
+brand='Maxell',single,0.021036,0.020513,0.000523,2.48,0.29
+main_cat='Computers' AND overall>=5.0,compound,0.022123,0.022368,0.000245,1.11,1.92
+brand='StarTech',single,0.022218,0.021956,0.000262,1.18,0.29
+main_cat='Musical Instruments' AND overall>=5.0,compound,0.022515,0.022806,0.000292,1.3,1.83
+brand='Hosa',single,0.027274,0.027935,0.00066,2.42,0.25
+main_cat='Musical Instruments' AND overall>=4.0,compound,0.028509,0.029171,0.000663,2.33,2.0
+main_cat='Computers' AND overall>=4.0,compound,0.028511,0.028759,0.000248,0.87,2.08
+brand='Koss',single,0.02857,0.030099,0.001529,5.35,0.29
+main_cat='Musical Instruments' AND overall>=3.0,compound,0.030869,0.03162,0.000751,2.43,6.58
+brand='Nikon',single,0.031356,0.029945,0.001412,4.5,0.25
+main_cat='Computers' AND overall>=3.0,compound,0.031488,0.03198,0.000493,1.57,6.67
+brand='Tripp Lite',single,0.033768,0.033862,9.3e-05,0.28,0.25
+main_cat='Musical Instruments',single,0.034242,0.035562,0.00132,3.86,0.29
+brand='Panasonic',single,0.038744,0.038629,0.000115,0.3,0.25
+main_cat='Computers',single,0.039162,0.039866,0.000704,1.8,0.29
+brand='Belkin',single,0.047606,0.047674,6.8e-05,0.14,0.29
+"main_cat IN ('Computers', 'Cell Phones &amp; Accessories')",in_set,0.050111,0.052081,0.00197,3.93,1.71
+brand='Tiffen',single,0.050291,0.050483,0.000192,0.38,0.29
+verified=false AND overall<=2.0,compound,0.051889,0.051127,0.000762,1.47,12.37
+"main_cat IN ('Computers', 'Office Products')",in_set,0.052296,0.052416,0.00012,0.23,1.67
+"main_cat IN ('Computers', 'Sports & Outdoors')",in_set,0.052461,0.053266,0.000805,1.53,1.62
+"main_cat IN ('Computers', 'Books')",in_set,0.053716,0.055534,0.001818,3.38,1.25
+main_cat='Camera &amp; Photo' AND overall>=5.0,compound,0.053987,0.052004,0.001983,3.67,2.63
+brand='Canon',single,0.058808,0.057415,0.001393,2.37,0.29
+brand='Sony',single,0.064364,0.065327,0.000963,1.5,0.29
+main_cat='Home Audio &amp; Theater' AND overall>=5.0,compound,0.066807,0.065687,0.00112,1.68,2.79
+main_cat='Camera &amp; Photo' AND overall>=4.0,compound,0.068464,0.067569,0.000895,1.31,2.75
+verified=false AND overall<=3.0,compound,0.071283,0.070738,0.000545,0.76,17.42
+"main_cat IN ('Computers', 'Musical Instruments')",in_set,0.073404,0.075428,0.002024,2.76,2.17
+main_cat='Camera &amp; Photo' AND overall>=3.0,compound,0.073636,0.072929,0.000707,0.96,7.33
+main_cat='Camera &amp; Photo',single,0.081807,0.080557,0.001251,1.53,0.29
+main_cat='Camera & Photo' AND overall>=5.0,compound,0.083462,0.082618,0.000844,1.01,3.29
+main_cat='Home Audio &amp; Theater' AND overall>=4.0,compound,0.085995,0.085066,0.000929,1.08,3.46
+"main_cat IN ('Camera &amp; Photo', 'Car Electronics')",in_set,0.092409,0.091663,0.000745,0.81,2.25
+"main_cat IN ('Camera &amp; Photo', 'Cell Phones &amp; Accessories')",in_set,0.092757,0.092772,1.5e-05,0.02,2.17
+main_cat='Home Audio &amp; Theater' AND overall>=3.0,compound,0.093965,0.092488,0.001477,1.57,8.5
+"main_cat IN ('Camera &amp; Photo', 'Office Products')",in_set,0.094942,0.093107,0.001835,1.93,2.38
+"main_cat IN ('Camera &amp; Photo', 'Sports & Outdoors')",in_set,0.095107,0.093957,0.00115,1.21,1.96
+"main_cat IN ('Camera &amp; Photo', 'Books')",in_set,0.096362,0.096225,0.000137,0.14,1.08
+verified=true AND overall<=2.0,compound,0.097019,0.098982,0.001963,2.02,13.37
+"main_cat IN ('Camera &amp; Photo', 'Cell Phones &amp; Accessories', 'Car Electronics')",in_set,0.103358,0.103878,0.00052,0.5,4.33
+"main_cat IN ('Camera &amp; Photo', 'Office Products', 'Car Electronics')",in_set,0.105544,0.104213,0.00133,1.26,4.33
+"main_cat IN ('Camera &amp; Photo', 'Sports & Outdoors', 'Car Electronics')",in_set,0.105708,0.105064,0.000645,0.61,4.0
+"main_cat IN ('Camera &amp; Photo', 'Office Products', 'Cell Phones &amp; Accessories')",in_set,0.105891,0.105321,0.00057,0.54,4.33
+"main_cat IN ('Camera &amp; Photo', 'Sports & Outdoors', 'Cell Phones &amp; Accessories')",in_set,0.106056,0.106172,0.000116,0.11,8.83
+"main_cat IN ('Camera &amp; Photo', 'Books', 'Car Electronics')",in_set,0.106963,0.107332,0.000368,0.34,8.08
+"main_cat IN ('Camera &amp; Photo', 'Books', 'Cell Phones &amp; Accessories')",in_set,0.107311,0.10844,0.001128,1.05,8.12
+main_cat='Camera & Photo' AND overall>=4.0,compound,0.107724,0.106198,0.001526,1.42,1.62
+"main_cat IN ('Camera &amp; Photo', 'Sports & Outdoors', 'Office Products')",in_set,0.108242,0.106507,0.001735,1.6,8.87
+"main_cat IN ('Camera &amp; Photo', 'Books', 'Office Products')",in_set,0.109497,0.108775,0.000722,0.66,8.21
+"main_cat IN ('Camera &amp; Photo', 'Books', 'Sports & Outdoors')",in_set,0.109661,0.109625,3.6e-05,0.03,8.38
+main_cat='Home Audio &amp; Theater',single,0.109932,0.109239,0.000694,0.63,0.29
+"main_cat IN ('Camera &amp; Photo', 'Musical Instruments')",in_set,0.11605,0.116119,6.9e-05,0.06,8.75
+main_cat='Camera & Photo' AND overall>=3.0,compound,0.116578,0.115501,0.001077,0.92,5.88
+verified=false AND overall<=4.0,compound,0.119544,0.11782,0.001724,1.44,15.17
+"main_cat IN ('Home Audio &amp; Theater', 'Car Electronics')",in_set,0.120534,0.120345,0.000188,0.16,1.46
+"main_cat IN ('Home Audio &amp; Theater', 'Cell Phones &amp; Accessories')",in_set,0.120881,0.121453,0.000572,0.47,1.54
+"main_cat IN ('Camera &amp; Photo', 'Computers')",in_set,0.120969,0.120423,0.000546,0.45,9.13
+verified=false AND overall>=5.0,compound,0.122095,0.125267,0.003172,2.6,1.58
+"overall IN (2,3)",in_set,0.122933,0.124417,0.001484,1.21,7.37
+"main_cat IN ('Home Audio &amp; Theater', 'Office Products')",in_set,0.123067,0.121788,0.001278,1.04,1.5
+"main_cat IN ('Home Audio &amp; Theater', 'Sports & Outdoors')",in_set,0.123232,0.122639,0.000593,0.48,1.63
+"main_cat IN ('Home Audio &amp; Theater', 'Books')",in_set,0.124487,0.124907,0.00042,0.34,1.75
+"main_cat IN ('Camera &amp; Photo', 'Musical Instruments', 'Car Electronics')",in_set,0.126651,0.127226,0.000575,0.45,9.0
+"main_cat IN ('Camera &amp; Photo', 'Musical Instruments', 'Cell Phones &amp; Accessories')",in_set,0.126999,0.128334,0.001335,1.05,9.13
+"main_cat IN ('Camera &amp; Photo', 'Musical Instruments', 'Office Products')",in_set,0.129184,0.128669,0.000515,0.4,9.13
+"main_cat IN ('Camera &amp; Photo', 'Musical Instruments', 'Sports & Outdoors')",in_set,0.129349,0.129519,0.00017,0.13,9.46
+"main_cat IN ('Camera &amp; Photo', 'Musical Instruments', 'Books')",in_set,0.130604,0.131787,0.001183,0.91,9.58
+main_cat='Camera & Photo',single,0.130617,0.129287,0.00133,1.02,0.33
+"main_cat IN ('Home Audio &amp; Theater', 'Cell Phones &amp; Accessories', 'Car Electronics')",in_set,0.131483,0.13256,0.001077,0.82,2.58
+"main_cat IN ('Camera &amp; Photo', 'Computers', 'Car Electronics')",in_set,0.131571,0.131529,4.1e-05,0.03,9.46
+"main_cat IN ('Camera &amp; Photo', 'Computers', 'Cell Phones &amp; Accessories')",in_set,0.131918,0.132638,0.000719,0.55,9.58
+"main_cat IN ('Home Audio &amp; Theater', 'Office Products', 'Car Electronics')",in_set,0.133668,0.132895,0.000773,0.58,2.5
+"main_cat IN ('Home Audio &amp; Theater', 'Sports & Outdoors', 'Car Electronics')",in_set,0.133833,0.133746,8.7e-05,0.07,2.62
+"main_cat IN ('Home Audio &amp; Theater', 'Office Products', 'Cell Phones &amp; Accessories')",in_set,0.134016,0.134003,1.3e-05,0.01,2.54
+"main_cat IN ('Camera &amp; Photo', 'Computers', 'Office Products')",in_set,0.134104,0.132973,0.001131,0.84,9.58
+"main_cat IN ('Home Audio &amp; Theater', 'Sports & Outdoors', 'Cell Phones &amp; Accessories')",in_set,0.134181,0.134854,0.000673,0.5,2.71
+"main_cat IN ('Camera &amp; Photo', 'Computers', 'Sports & Outdoors')",in_set,0.134269,0.133823,0.000446,0.33,9.67
+"main_cat IN ('Home Audio &amp; Theater', 'Books', 'Car Electronics')",in_set,0.135088,0.136013,0.000925,0.68,2.79
+"main_cat IN ('Home Audio &amp; Theater', 'Books', 'Cell Phones &amp; Accessories')",in_set,0.135436,0.137122,0.001686,1.24,2.88
+"main_cat IN ('Camera &amp; Photo', 'Computers', 'Books')",in_set,0.135524,0.136091,0.000567,0.42,9.54
+"main_cat IN ('Home Audio &amp; Theater', 'Sports & Outdoors', 'Office Products')",in_set,0.136366,0.135189,0.001177,0.86,2.75
+main_cat='Home Audio & Theater' AND overall>=5.0,compound,0.136557,0.13591,0.000647,0.47,1.46
+"main_cat IN ('Home Audio &amp; Theater', 'Books', 'Office Products')",in_set,0.137621,0.137457,0.000165,0.12,2.83
+"main_cat IN ('Home Audio &amp; Theater', 'Books', 'Sports & Outdoors')",in_set,0.137786,0.138307,0.000521,0.38,2.92
+"main_cat IN ('Camera & Photo', 'Car Electronics')",in_set,0.141219,0.140394,0.000824,0.58,1.42
+"main_cat IN ('Camera & Photo', 'Cell Phones &amp; Accessories')",in_set,0.141566,0.141502,6.4e-05,0.05,1.54
+"main_cat IN ('Camera & Photo', 'Office Products')",in_set,0.143752,0.141837,0.001914,1.33,1.58
+"main_cat IN ('Camera & Photo', 'Sports & Outdoors')",in_set,0.143917,0.142688,0.001229,0.85,1.62
+"main_cat IN ('Home Audio &amp; Theater', 'Musical Instruments')",in_set,0.144174,0.144801,0.000627,0.43,3.21
+"main_cat IN ('Camera & Photo', 'Books')",in_set,0.145172,0.144956,0.000216,0.15,1.79
+overall<=2.0,range,0.148908,0.15011,0.001201,0.81,9.75
+"overall IN (1,2)",in_set,0.148908,0.15011,0.001201,0.81,9.37
+"main_cat IN ('Home Audio &amp; Theater', 'Computers')",in_set,0.149094,0.149104,1.1e-05,0.01,3.42
+verified=true AND overall<=3.0,compound,0.150019,0.153382,0.003363,2.24,15.42
+"main_cat IN ('Camera & Photo', 'Cell Phones &amp; Accessories', 'Car Electronics')",in_set,0.152168,0.152609,0.000441,0.29,2.5
+"main_cat IN ('Camera & Photo', 'Office Products', 'Car Electronics')",in_set,0.154353,0.152944,0.001409,0.91,2.58
+"main_cat IN ('Camera & Photo', 'Sports & Outdoors', 'Car Electronics')",in_set,0.154518,0.153795,0.000724,0.47,2.58
+"main_cat IN ('Camera & Photo', 'Office Products', 'Cell Phones &amp; Accessories')",in_set,0.154701,0.154052,0.000649,0.42,2.67
+"main_cat IN ('Home Audio &amp; Theater', 'Musical Instruments', 'Car Electronics')",in_set,0.154776,0.155908,0.001132,0.73,4.92
+"main_cat IN ('Camera & Photo', 'Sports & Outdoors', 'Cell Phones &amp; Accessories')",in_set,0.154866,0.154903,3.7e-05,0.02,2.67
+"main_cat IN ('Home Audio &amp; Theater', 'Musical Instruments', 'Cell Phones &amp; Accessories')",in_set,0.155124,0.157016,0.001892,1.22,3.92
+"main_cat IN ('Camera &amp; Photo', 'Computers', 'Musical Instruments')",in_set,0.155211,0.155985,0.000774,0.5,12.25
+"main_cat IN ('Camera & Photo', 'Books', 'Car Electronics')",in_set,0.155773,0.156062,0.000289,0.19,3.21
+"main_cat IN ('Camera & Photo', 'Books', 'Cell Phones &amp; Accessories')",in_set,0.156121,0.15717,0.001049,0.67,2.79
+"main_cat IN ('Camera & Photo', 'Sports & Outdoors', 'Office Products')",in_set,0.157051,0.155238,0.001814,1.15,2.75
+main_cat='All Electronics' AND overall>=5.0,compound,0.157278,0.156526,0.000752,0.48,1.58
+"main_cat IN ('Home Audio &amp; Theater', 'Musical Instruments', 'Office Products')",in_set,0.157309,0.157351,4.2e-05,0.03,3.96
+"main_cat IN ('Home Audio &amp; Theater', 'Musical Instruments', 'Sports & Outdoors')",in_set,0.157474,0.158201,0.000727,0.46,3.92
+"main_cat IN ('Camera & Photo', 'Books', 'Office Products')",in_set,0.158306,0.157505,0.000801,0.51,2.67
+"main_cat IN ('Camera & Photo', 'Books', 'Sports & Outdoors')",in_set,0.158471,0.158356,0.000115,0.07,2.71
+"main_cat IN ('Home Audio &amp; Theater', 'Musical Instruments', 'Books')",in_set,0.158729,0.160469,0.00174,1.1,4.04
+"main_cat IN ('Home Audio &amp; Theater', 'Computers', 'Car Electronics')",in_set,0.159695,0.160211,0.000516,0.32,4.0
+"main_cat IN ('Home Audio &amp; Theater', 'Computers', 'Cell Phones &amp; Accessories')",in_set,0.160043,0.161319,0.001276,0.8,4.04
+"main_cat IN ('Home Audio &amp; Theater', 'Computers', 'Office Products')",in_set,0.162228,0.161654,0.000574,0.35,4.08
+"main_cat IN ('Home Audio &amp; Theater', 'Computers', 'Sports & Outdoors')",in_set,0.162393,0.162505,0.000112,0.07,4.17
+"main_cat IN ('Home Audio &amp; Theater', 'Computers', 'Books')",in_set,0.163648,0.164773,0.001124,0.69,4.33
+"main_cat IN ('Camera & Photo', 'Musical Instruments')",in_set,0.164859,0.16485,9e-06,0.01,3.21
+"main_cat IN ('Camera & Photo', 'Computers')",in_set,0.169779,0.169153,0.000625,0.37,3.42
+verified=false AND overall>=4.0,compound,0.170356,0.172349,0.001993,1.17,1.83
+"overall IN (1,3)",in_set,0.170763,0.173715,0.002952,1.73,11.12
+"main_cat IN ('Camera & Photo', 'Musical Instruments', 'Car Electronics')",in_set,0.175461,0.175957,0.000496,0.28,4.0
+"main_cat IN ('Camera & Photo', 'Musical Instruments', 'Cell Phones &amp; Accessories')",in_set,0.175809,0.177065,0.001256,0.71,3.92
+"main_cat IN ('Camera & Photo', 'Musical Instruments', 'Office Products')",in_set,0.177994,0.1774,0.000594,0.33,3.92
+"main_cat IN ('Camera & Photo', 'Musical Instruments', 'Sports & Outdoors')",in_set,0.178159,0.17825,9.1e-05,0.05,3.96
+main_cat='Home Audio & Theater' AND overall>=4.0,compound,0.178716,0.179152,0.000437,0.24,1.67
+"main_cat IN ('Camera & Photo', 'Musical Instruments', 'Books')",in_set,0.179414,0.180518,0.001104,0.62,4.08
+"main_cat IN ('Camera & Photo', 'Computers', 'Car Electronics')",in_set,0.18038,0.18026,0.00012,0.07,4.0
+"main_cat IN ('Camera & Photo', 'Computers', 'Cell Phones &amp; Accessories')",in_set,0.180728,0.181368,0.00064,0.35,4.08
+"main_cat IN ('Camera & Photo', 'Computers', 'Office Products')",in_set,0.182913,0.181703,0.00121,0.66,4.08
+"main_cat IN ('Camera & Photo', 'Computers', 'Sports & Outdoors')",in_set,0.183078,0.182554,0.000525,0.29,4.21
+"main_cat IN ('Home Audio &amp; Theater', 'Computers', 'Musical Instruments')",in_set,0.183336,0.184667,0.001331,0.73,5.62
+"main_cat IN ('Camera & Photo', 'Computers', 'Books')",in_set,0.184333,0.184822,0.000488,0.26,4.33
+verified=false AND overall>=3.0,compound,0.18975,0.19196,0.00221,1.16,6.17
+"main_cat IN ('Home Audio &amp; Theater', 'Camera &amp; Photo')",in_set,0.191739,0.189795,0.001944,1.01,6.25
+main_cat='Home Audio & Theater' AND overall>=3.0,compound,0.196324,0.197268,0.000945,0.48,5.88
+main_cat='All Electronics' AND overall>=4.0,compound,0.202083,0.200644,0.001439,0.71,1.62
+"main_cat IN ('Home Audio &amp; Theater', 'Camera &amp; Photo', 'Car Electronics')",in_set,0.202341,0.200902,0.001439,0.71,6.54
+"main_cat IN ('Home Audio &amp; Theater', 'Camera &amp; Photo', 'Cell Phones &amp; Accessories')",in_set,0.202689,0.20201,0.000679,0.33,6.92
+"main_cat IN ('Camera & Photo', 'Computers', 'Musical Instruments')",in_set,0.204021,0.204716,0.000695,0.34,5.62
+"main_cat IN ('Home Audio &amp; Theater', 'Camera &amp; Photo', 'Office Products')",in_set,0.204874,0.202345,0.002529,1.23,6.67
+"main_cat IN ('Home Audio &amp; Theater', 'Camera &amp; Photo', 'Sports & Outdoors')",in_set,0.205039,0.203195,0.001843,0.9,6.83
+"main_cat IN ('Home Audio &amp; Theater', 'Camera &amp; Photo', 'Books')",in_set,0.206294,0.205463,0.000831,0.4,7.79
+verified=false AND overall>=2.0,compound,0.206296,0.208556,0.002259,1.1,9.0
+"main_cat IN ('Camera & Photo', 'Camera &amp; Photo')",in_set,0.212424,0.209844,0.00258,1.21,6.29
+overall<=3.0,range,0.221302,0.224121,0.002819,1.27,13.71
+"overall IN (1,2,3)",in_set,0.221302,0.224121,0.002819,1.27,13.58
+main_cat='All Electronics' AND overall>=3.0,compound,0.221585,0.219946,0.00164,0.74,6.08
+"main_cat IN ('Camera & Photo', 'Camera &amp; Photo', 'Car Electronics')",in_set,0.223026,0.220951,0.002075,0.93,6.67
+"main_cat IN ('Camera & Photo', 'Camera &amp; Photo', 'Cell Phones &amp; Accessories')",in_set,0.223374,0.222059,0.001315,0.59,6.71
+"main_cat IN ('Camera & Photo', 'Camera &amp; Photo', 'Office Products')",in_set,0.225559,0.222394,0.003165,1.4,6.75
+"main_cat IN ('Camera & Photo', 'Camera &amp; Photo', 'Sports & Outdoors')",in_set,0.225724,0.223244,0.00248,1.1,6.88
+"main_cat IN ('Home Audio &amp; Theater', 'Camera &amp; Photo', 'Musical Instruments')",in_set,0.225982,0.225358,0.000624,0.28,9.29
+"overall IN (2,4)",in_set,0.226317,0.227213,0.000896,0.4,3.54
+"main_cat IN ('Camera & Photo', 'Camera &amp; Photo', 'Books')",in_set,0.226979,0.225512,0.001467,0.65,6.92
+"main_cat IN ('Home Audio &amp; Theater', 'Camera &amp; Photo', 'Computers')",in_set,0.230901,0.229661,0.00124,0.54,9.54
+main_cat='Home Audio & Theater',single,0.231638,0.231078,0.00056,0.24,0.29
+"main_cat IN ('Camera & Photo', 'Home Audio &amp; Theater')",in_set,0.240549,0.238526,0.002023,0.84,0.75
+verified=false AND overall<=5.0,compound,0.241639,0.243087,0.001448,0.6,14.92
+verified=false,single,0.241639,0.243087,0.001448,0.6,0.29
+"main_cat IN ('Home Audio & Theater', 'Car Electronics')",in_set,0.24224,0.242185,5.4e-05,0.02,1.42
+"main_cat IN ('Home Audio & Theater', 'Cell Phones &amp; Accessories')",in_set,0.242587,0.243293,0.000706,0.29,1.54
+"main_cat IN ('Home Audio & Theater', 'Office Products')",in_set,0.244773,0.243628,0.001144,0.47,1.54
+"main_cat IN ('Home Audio & Theater', 'Sports & Outdoors')",in_set,0.244938,0.244479,0.000459,0.19,1.62
+"main_cat IN ('Home Audio & Theater', 'Books')",in_set,0.246193,0.246747,0.000554,0.23,1.79
+"main_cat IN ('Camera & Photo', 'Camera &amp; Photo', 'Musical Instruments')",in_set,0.246667,0.245407,0.00126,0.51,8.33
+"overall IN (3,4)",in_set,0.248172,0.250818,0.002647,1.07,5.83
+"main_cat IN ('Camera & Photo', 'Home Audio &amp; Theater', 'Car Electronics')",in_set,0.251151,0.249633,0.001518,0.6,1.54
+"main_cat IN ('Camera & Photo', 'Home Audio &amp; Theater', 'Cell Phones &amp; Accessories')",in_set,0.251498,0.250741,0.000758,0.3,1.67
+"main_cat IN ('Camera & Photo', 'Camera &amp; Photo', 'Computers')",in_set,0.251586,0.24971,0.001876,0.75,8.54
+"main_cat IN ('Home Audio & Theater', 'Cell Phones &amp; Accessories', 'Car Electronics')",in_set,0.253189,0.2544,0.001211,0.48,2.58
+"main_cat IN ('Camera & Photo', 'Home Audio &amp; Theater', 'Office Products')",in_set,0.253684,0.251076,0.002608,1.03,1.67
+"main_cat IN ('Camera & Photo', 'Home Audio &amp; Theater', 'Sports & Outdoors')",in_set,0.253849,0.251926,0.001922,0.76,1.71
+"main_cat IN ('Camera & Photo', 'Home Audio &amp; Theater', 'Books')",in_set,0.255104,0.254194,0.00091,0.36,1.87
+"main_cat IN ('Home Audio & Theater', 'Office Products', 'Car Electronics')",in_set,0.255374,0.254735,0.000639,0.25,2.5
+"main_cat IN ('Home Audio & Theater', 'Sports & Outdoors', 'Car Electronics')",in_set,0.255539,0.255586,4.6e-05,0.02,2.54
+"main_cat IN ('Home Audio & Theater', 'Office Products', 'Cell Phones &amp; Accessories')",in_set,0.255722,0.255843,0.000121,0.05,2.58
+"main_cat IN ('Home Audio & Theater', 'Sports & Outdoors', 'Cell Phones &amp; Accessories')",in_set,0.255887,0.256694,0.000807,0.32,2.71
+"main_cat IN ('Home Audio & Theater', 'Books', 'Car Electronics')",in_set,0.256794,0.257853,0.001059,0.41,2.79
+"main_cat IN ('Home Audio & Theater', 'Books', 'Cell Phones &amp; Accessories')",in_set,0.257142,0.258961,0.00182,0.71,2.83
+"main_cat IN ('Home Audio & Theater', 'Sports & Outdoors', 'Office Products')",in_set,0.258072,0.257029,0.001044,0.4,2.75
+"main_cat IN ('Home Audio & Theater', 'Books', 'Office Products')",in_set,0.259327,0.259296,3.1e-05,0.01,2.88
+"main_cat IN ('Home Audio & Theater', 'Books', 'Sports & Outdoors')",in_set,0.259492,0.260147,0.000655,0.25,2.92
+"main_cat IN ('Home Audio & Theater', 'Musical Instruments')",in_set,0.26588,0.266641,0.000761,0.29,3.21
+"main_cat IN ('Home Audio & Theater', 'Computers')",in_set,0.2708,0.270944,0.000145,0.05,3.46
+main_cat='All Electronics',single,0.271385,0.271743,0.000359,0.13,0.29
+"overall IN (1,4)",in_set,0.274147,0.276511,0.002364,0.86,6.92
+"main_cat IN ('Camera & Photo', 'Home Audio &amp; Theater', 'Musical Instruments')",in_set,0.274791,0.274088,0.000703,0.26,3.38
+"main_cat IN ('Home Audio & Theater', 'Musical Instruments', 'Car Electronics')",in_set,0.276482,0.277748,0.001266,0.46,4.25
+"main_cat IN ('Home Audio & Theater', 'Musical Instruments', 'Cell Phones &amp; Accessories')",in_set,0.27683,0.278856,0.002026,0.73,4.33
+verified=true AND overall<=4.0,compound,0.277536,0.283108,0.005572,2.01,15.33
+"main_cat IN ('Home Audio & Theater', 'Musical Instruments', 'Office Products')",in_set,0.279015,0.279191,0.000176,0.06,4.38
+"main_cat IN ('Home Audio & Theater', 'Musical Instruments', 'Sports & Outdoors')",in_set,0.27918,0.280041,0.000861,0.31,4.46
+"main_cat IN ('Camera & Photo', 'Home Audio &amp; Theater', 'Computers')",in_set,0.279711,0.278392,0.001319,0.47,3.79
+"main_cat IN ('Home Audio & Theater', 'Musical Instruments', 'Books')",in_set,0.280435,0.282309,0.001874,0.67,4.54
+"main_cat IN ('Home Audio & Theater', 'Computers', 'Car Electronics')",in_set,0.281401,0.282051,0.00065,0.23,4.42
+"main_cat IN ('Home Audio & Theater', 'Computers', 'Cell Phones &amp; Accessories')",in_set,0.281749,0.283159,0.00141,0.5,4.5
+"main_cat IN ('All Electronics', 'Car Electronics')",in_set,0.281986,0.28285,0.000864,0.31,1.42
+"main_cat IN ('All Electronics', 'Cell Phones &amp; Accessories')",in_set,0.282334,0.283958,0.001624,0.58,1.5
+"main_cat IN ('Home Audio & Theater', 'Computers', 'Office Products')",in_set,0.283934,0.283494,0.00044,0.15,4.5
+"main_cat IN ('Home Audio & Theater', 'Computers', 'Sports & Outdoors')",in_set,0.284099,0.284345,0.000246,0.09,4.62
+"main_cat IN ('All Electronics', 'Office Products')",in_set,0.284519,0.284293,0.000226,0.08,1.58
+"main_cat IN ('All Electronics', 'Sports & Outdoors')",in_set,0.284684,0.285144,0.000459,0.16,1.67
+"main_cat IN ('Home Audio & Theater', 'Computers', 'Books')",in_set,0.285354,0.286613,0.001258,0.44,4.92
+"main_cat IN ('All Electronics', 'Books')",in_set,0.285939,0.287411,0.001472,0.51,1.79
+"main_cat IN ('All Electronics', 'Cell Phones &amp; Accessories', 'Car Electronics')",in_set,0.292936,0.295065,0.002129,0.73,2.29
+"main_cat IN ('All Electronics', 'Office Products', 'Car Electronics')",in_set,0.295121,0.2954,0.000279,0.09,2.29
+"main_cat IN ('All Electronics', 'Sports & Outdoors', 'Car Electronics')",in_set,0.295286,0.29625,0.000965,0.33,2.33
+"main_cat IN ('All Electronics', 'Office Products', 'Cell Phones &amp; Accessories')",in_set,0.295469,0.296508,0.001039,0.35,2.29
+"main_cat IN ('All Electronics', 'Sports & Outdoors', 'Cell Phones &amp; Accessories')",in_set,0.295634,0.297359,0.001725,0.58,2.42
+"main_cat IN ('All Electronics', 'Books', 'Car Electronics')",in_set,0.296541,0.298518,0.001978,0.67,2.46
+"main_cat IN ('All Electronics', 'Books', 'Cell Phones &amp; Accessories')",in_set,0.296889,0.299626,0.002738,0.92,2.58
+"main_cat IN ('All Electronics', 'Sports & Outdoors', 'Office Products')",in_set,0.297819,0.297694,0.000125,0.04,2.46
+"overall IN (2,3,4)",in_set,0.298711,0.301224,0.002514,0.84,7.54
+"main_cat IN ('All Electronics', 'Books', 'Office Products')",in_set,0.299074,0.299961,0.000887,0.3,2.54
+"main_cat IN ('All Electronics', 'Books', 'Sports & Outdoors')",in_set,0.299239,0.300812,0.001573,0.53,2.58
+"main_cat IN ('Home Audio & Theater', 'Computers', 'Musical Instruments')",in_set,0.305042,0.306507,0.001465,0.48,6.42
+"main_cat IN ('All Electronics', 'Musical Instruments')",in_set,0.305627,0.307306,0.001679,0.55,3.25
+"main_cat IN ('All Electronics', 'Computers')",in_set,0.310546,0.311609,0.001063,0.34,3.5
+"main_cat IN ('Home Audio & Theater', 'Camera &amp; Photo')",in_set,0.313445,0.311635,0.00181,0.58,6.25
+"main_cat IN ('All Electronics', 'Musical Instruments', 'Car Electronics')",in_set,0.316229,0.318413,0.002184,0.69,3.79
+"main_cat IN ('All Electronics', 'Musical Instruments', 'Cell Phones &amp; Accessories')",in_set,0.316576,0.319521,0.002944,0.93,3.88
+"main_cat IN ('All Electronics', 'Musical Instruments', 'Office Products')",in_set,0.318762,0.319856,0.001094,0.34,3.92
+"main_cat IN ('All Electronics', 'Musical Instruments', 'Sports & Outdoors')",in_set,0.318927,0.320706,0.00178,0.56,4.0
+"main_cat IN ('All Electronics', 'Musical Instruments', 'Books')",in_set,0.320182,0.322974,0.002792,0.87,4.13
+"main_cat IN ('All Electronics', 'Computers', 'Car Electronics')",in_set,0.321148,0.322716,0.001568,0.49,4.04
+"main_cat IN ('All Electronics', 'Computers', 'Cell Phones &amp; Accessories')",in_set,0.321496,0.323824,0.002328,0.72,4.08
+"main_cat IN ('Camera & Photo', 'Home Audio &amp; Theater', 'Camera &amp; Photo')",in_set,0.322356,0.319083,0.003274,1.02,6.71
+"main_cat IN ('All Electronics', 'Computers', 'Office Products')",in_set,0.323681,0.324159,0.000478,0.15,4.17
+"main_cat IN ('All Electronics', 'Computers', 'Sports & Outdoors')",in_set,0.323846,0.32501,0.001164,0.36,4.17
+"main_cat IN ('Home Audio & Theater', 'Camera &amp; Photo', 'Car Electronics')",in_set,0.324047,0.322742,0.001305,0.4,7.71
+"main_cat IN ('Home Audio & Theater', 'Camera &amp; Photo', 'Cell Phones &amp; Accessories')",in_set,0.324395,0.32385,0.000545,0.17,7.5
+"overall IN (1,2,4)",in_set,0.324686,0.326917,0.002231,0.69,9.83
+"main_cat IN ('All Electronics', 'Computers', 'Books')",in_set,0.325101,0.327277,0.002177,0.67,4.29
+"main_cat IN ('Home Audio & Theater', 'Camera &amp; Photo', 'Office Products')",in_set,0.32658,0.324185,0.002395,0.73,7.5
+"main_cat IN ('Home Audio & Theater', 'Camera &amp; Photo', 'Sports & Outdoors')",in_set,0.326745,0.325035,0.00171,0.52,7.58
+"main_cat IN ('Home Audio & Theater', 'Camera &amp; Photo', 'Books')",in_set,0.328,0.327303,0.000697,0.21,8.12
+"main_cat IN ('Home Audio & Theater', 'Home Audio &amp; Theater')",in_set,0.34157,0.340317,0.001253,0.37,0.79
+"main_cat IN ('All Electronics', 'Computers', 'Musical Instruments')",in_set,0.344789,0.347172,0.002383,0.69,5.54
+"overall IN (1,3,4)",in_set,0.346541,0.350522,0.003981,1.15,11.29
+"main_cat IN ('Home Audio & Theater', 'Camera &amp; Photo', 'Musical Instruments')",in_set,0.347688,0.347198,0.00049,0.14,8.25
+"main_cat IN ('Home Audio & Theater', 'Home Audio &amp; Theater', 'Car Electronics')",in_set,0.352172,0.351424,0.000748,0.21,1.54
+"main_cat IN ('Home Audio & Theater', 'Home Audio &amp; Theater', 'Cell Phones &amp; Accessories')",in_set,0.352519,0.352532,1.2e-05,0.0,1.58
+"main_cat IN ('Home Audio & Theater', 'Camera &amp; Photo', 'Computers')",in_set,0.352607,0.351501,0.001106,0.31,8.46
+"main_cat IN ('All Electronics', 'Camera &amp; Photo')",in_set,0.353192,0.3523,0.000892,0.25,6.29
+"main_cat IN ('Home Audio & Theater', 'Home Audio &amp; Theater', 'Office Products')",in_set,0.354705,0.352867,0.001838,0.52,1.62
+"main_cat IN ('Home Audio & Theater', 'Home Audio &amp; Theater', 'Sports & Outdoors')",in_set,0.35487,0.353717,0.001152,0.32,1.67
+"main_cat IN ('Home Audio & Theater', 'Home Audio &amp; Theater', 'Books')",in_set,0.356125,0.355985,0.00014,0.04,1.83
+"main_cat IN ('Home Audio & Theater', 'Camera & Photo')",in_set,0.362255,0.360366,0.001889,0.52,0.83
+"main_cat IN ('All Electronics', 'Camera &amp; Photo', 'Car Electronics')",in_set,0.363794,0.363407,0.000387,0.11,6.62
+"main_cat IN ('All Electronics', 'Camera &amp; Photo', 'Cell Phones &amp; Accessories')",in_set,0.364141,0.364515,0.000373,0.1,6.67
+"main_cat IN ('All Electronics', 'Camera &amp; Photo', 'Office Products')",in_set,0.366327,0.36485,0.001477,0.4,6.71
+"main_cat IN ('All Electronics', 'Camera &amp; Photo', 'Sports & Outdoors')",in_set,0.366492,0.3657,0.000791,0.22,6.79
+"main_cat IN ('All Electronics', 'Camera &amp; Photo', 'Books')",in_set,0.367747,0.367968,0.000221,0.06,7.54
+"main_cat IN ('Home Audio & Theater', 'Camera & Photo', 'Car Electronics')",in_set,0.372857,0.371473,0.001384,0.37,1.54
+"main_cat IN ('Home Audio & Theater', 'Camera & Photo', 'Cell Phones &amp; Accessories')",in_set,0.373205,0.372581,0.000624,0.17,1.58
+"main_cat IN ('Home Audio & Theater', 'Camera & Photo', 'Office Products')",in_set,0.37539,0.372916,0.002474,0.66,1.62
+"main_cat IN ('Home Audio & Theater', 'Camera & Photo', 'Sports & Outdoors')",in_set,0.375555,0.373766,0.001788,0.48,1.71
+"main_cat IN ('Home Audio & Theater', 'Home Audio &amp; Theater', 'Musical Instruments')",in_set,0.375812,0.375879,6.7e-05,0.02,3.13
+"main_cat IN ('Home Audio & Theater', 'Camera & Photo', 'Books')",in_set,0.37681,0.376034,0.000776,0.21,1.83
+"main_cat IN ('Home Audio & Theater', 'Home Audio &amp; Theater', 'Computers')",in_set,0.380732,0.380183,0.000549,0.14,3.46
+"main_cat IN ('All Electronics', 'Home Audio &amp; Theater')",in_set,0.381317,0.380982,0.000335,0.09,0.79
+"main_cat IN ('All Electronics', 'Camera &amp; Photo', 'Musical Instruments')",in_set,0.387434,0.387862,0.000428,0.11,8.83
+"main_cat IN ('All Electronics', 'Home Audio &amp; Theater', 'Car Electronics')",in_set,0.391918,0.392089,0.00017,0.04,1.63
+"main_cat IN ('All Electronics', 'Home Audio &amp; Theater', 'Cell Phones &amp; Accessories')",in_set,0.392266,0.393197,0.000931,0.24,1.71
+"main_cat IN ('All Electronics', 'Camera &amp; Photo', 'Computers')",in_set,0.392354,0.392166,0.000188,0.05,9.21
+"main_cat IN ('All Electronics', 'Home Audio &amp; Theater', 'Office Products')",in_set,0.394451,0.393532,0.00092,0.23,1.75
+"main_cat IN ('All Electronics', 'Home Audio &amp; Theater', 'Sports & Outdoors')",in_set,0.394616,0.394382,0.000234,0.06,1.83
+"main_cat IN ('All Electronics', 'Home Audio &amp; Theater', 'Books')",in_set,0.395871,0.39665,0.000779,0.2,2.13
+"main_cat IN ('Home Audio & Theater', 'Camera & Photo', 'Musical Instruments')",in_set,0.396497,0.395928,0.000569,0.14,3.17
+overall<=4.0,range,0.39708,0.400928,0.003848,0.97,13.17
+"overall IN (1,2,3,4)",in_set,0.39708,0.400928,0.003848,0.97,14.17
+"main_cat IN ('Home Audio & Theater', 'Camera & Photo', 'Computers')",in_set,0.401417,0.400232,0.001185,0.3,3.42
+"main_cat IN ('All Electronics', 'Camera & Photo')",in_set,0.402002,0.401031,0.000971,0.24,0.83
+"main_cat IN ('All Electronics', 'Camera & Photo', 'Car Electronics')",in_set,0.412603,0.412138,0.000466,0.11,1.71
+"main_cat IN ('All Electronics', 'Camera & Photo', 'Cell Phones &amp; Accessories')",in_set,0.412951,0.413246,0.000295,0.07,1.71
+"main_cat IN ('All Electronics', 'Camera & Photo', 'Office Products')",in_set,0.415136,0.413581,0.001556,0.37,2.08
+"main_cat IN ('All Electronics', 'Camera & Photo', 'Sports & Outdoors')",in_set,0.415301,0.414431,0.00087,0.21,2.17
+"main_cat IN ('All Electronics', 'Home Audio &amp; Theater', 'Musical Instruments')",in_set,0.415559,0.416544,0.000985,0.24,3.42
+"main_cat IN ('All Electronics', 'Camera & Photo', 'Books')",in_set,0.416556,0.416699,0.000143,0.03,2.04
+"main_cat IN ('All Electronics', 'Home Audio &amp; Theater', 'Computers')",in_set,0.420478,0.420848,0.000369,0.09,3.67
+"main_cat IN ('Home Audio & Theater', 'Home Audio &amp; Theater', 'Camera &amp; Photo')",in_set,0.423377,0.420874,0.002504,0.59,6.12
+"main_cat IN ('All Electronics', 'Camera & Photo', 'Musical Instruments')",in_set,0.436244,0.436593,0.000349,0.08,3.5
+"main_cat IN ('All Electronics', 'Camera & Photo', 'Computers')",in_set,0.441163,0.440897,0.000267,0.06,3.79
+"main_cat IN ('Home Audio & Theater', 'Camera & Photo', 'Camera &amp; Photo')",in_set,0.444062,0.440923,0.00314,0.71,6.08
+"main_cat IN ('All Electronics', 'Home Audio &amp; Theater', 'Camera &amp; Photo')",in_set,0.463124,0.461538,0.001586,0.34,7.33
+"main_cat IN ('Home Audio & Theater', 'Camera & Photo', 'Home Audio &amp; Theater')",in_set,0.472187,0.469604,0.002583,0.55,0.88
+verified=true AND overall>=5.0,compound,0.480825,0.473805,0.00702,1.46,1.58
+"main_cat IN ('All Electronics', 'Camera & Photo', 'Camera &amp; Photo')",in_set,0.483809,0.481587,0.002222,0.46,6.62
+"main_cat IN ('All Electronics', 'Home Audio & Theater')",in_set,0.503023,0.502822,0.000201,0.04,0.83
+"main_cat IN ('All Electronics', 'Camera & Photo', 'Home Audio &amp; Theater')",in_set,0.511934,0.510269,0.001664,0.33,1.08
+"main_cat IN ('All Electronics', 'Home Audio & Theater', 'Car Electronics')",in_set,0.513624,0.513929,0.000304,0.06,1.62
+"main_cat IN ('All Electronics', 'Home Audio & Theater', 'Cell Phones &amp; Accessories')",in_set,0.513972,0.515037,0.001065,0.21,1.79
+"main_cat IN ('All Electronics', 'Home Audio & Theater', 'Office Products')",in_set,0.516157,0.515372,0.000786,0.15,1.75
+"main_cat IN ('All Electronics', 'Home Audio & Theater', 'Sports & Outdoors')",in_set,0.516322,0.516222,0.0001,0.02,1.83
+"main_cat IN ('All Electronics', 'Home Audio & Theater', 'Books')",in_set,0.517577,0.51849,0.000913,0.18,1.96
+"main_cat IN ('All Electronics', 'Home Audio & Theater', 'Musical Instruments')",in_set,0.537265,0.538384,0.001119,0.21,3.42
+"main_cat IN ('All Electronics', 'Home Audio & Theater', 'Computers')",in_set,0.542184,0.542688,0.000503,0.09,3.67
+"main_cat IN ('All Electronics', 'Home Audio & Theater', 'Camera &amp; Photo')",in_set,0.58483,0.583378,0.001452,0.25,6.62
+overall>=5.0,range,0.60292,0.599072,0.003848,0.64,0.75
+verified=true AND overall>=4.0,compound,0.608342,0.60353,0.004812,0.79,1.87
+"main_cat IN ('All Electronics', 'Home Audio & Theater', 'Home Audio &amp; Theater')",in_set,0.612955,0.61206,0.000894,0.15,1.0
+"main_cat IN ('All Electronics', 'Home Audio & Theater', 'Camera & Photo')",in_set,0.63364,0.632109,0.001531,0.24,1.08
+"overall IN (2,5)",in_set,0.653459,0.649478,0.003981,0.61,3.58
+verified=true AND overall>=3.0,compound,0.661342,0.657931,0.003411,0.52,6.29
+"overall IN (3,5)",in_set,0.675314,0.673083,0.002231,0.33,5.21
+verified=true AND overall>=2.0,compound,0.695334,0.691741,0.003593,0.52,9.04
+"overall IN (1,5)",in_set,0.701289,0.698776,0.002514,0.36,7.67
+"overall IN (2,3,5)",in_set,0.725853,0.723489,0.002364,0.33,7.62
+"overall IN (1,2,5)",in_set,0.751828,0.749182,0.002647,0.35,9.54
+verified=true AND overall<=5.0,compound,0.758361,0.756913,0.001448,0.19,16.46
+verified=true,single,0.758361,0.756913,0.001448,0.19,0.29
+"overall IN (1,3,5)",in_set,0.773683,0.772787,0.000896,0.12,11.46
+overall>=4.0,range,0.778698,0.775879,0.002819,0.36,0.92
+"overall IN (4,5)",in_set,0.778698,0.775879,0.002819,0.36,0.75
+"overall IN (1,2,3,5)",in_set,0.824222,0.823193,0.001029,0.12,14.79
+"overall IN (2,4,5)",in_set,0.829237,0.826285,0.002952,0.36,3.62
+overall>=3.0,range,0.851092,0.84989,0.001201,0.14,4.96
+"overall IN (3,4,5)",in_set,0.851092,0.84989,0.001201,0.14,5.0
+"overall IN (1,4,5)",in_set,0.877067,0.875583,0.001484,0.17,7.12
+overall>=2.0,range,0.901631,0.900296,0.001334,0.15,7.37
+"overall IN (2,3,4,5)",in_set,0.901631,0.900296,0.001334,0.15,8.75
+"overall IN (1,2,4,5)",in_set,0.927606,0.925989,0.001617,0.17,9.92
+"overall IN (1,3,4,5)",in_set,0.949461,0.949594,0.000133,0.01,11.87
+overall<=5.0,range,1.0,1.0,0.0,0.0,13.37
