@@ -109,22 +109,26 @@ def main():
     bitmap_hnsw_prefilter = BitmapHNSWPreFilter(faiss_idx, bitmap_idx) # Only for baseline logging
     
     for f_idx, fspec in enumerate(tqdm(filters, desc="Pre-computing")):
+        sel = fspec.actual_selectivity  # pass to strategies for adaptive ef / expansion
         for q_idx in range(NUM_QUERIES):
             q_emb = query_embeddings[q_idx].reshape(1, -1)
-            
+
             bf_result = brute_force.search(q_emb, config.CBO_TOP_K, fspec)
             true_neighbors = bf_result.ids
             cache["ref_ids"][f_idx][q_idx] = true_neighbors
-            
-            pf_result = post_filter.search(q_emb, config.CBO_TOP_K, fspec)
+
+            # PostFilter: adaptive expansion kicks in when sel is low
+            pf_result = post_filter.search(q_emb, config.CBO_TOP_K, fspec, selectivity=sel)
             pf_recall = len(set(pf_result.ids) & set(true_neighbors)) / len(true_neighbors) if true_neighbors else 1.0
             cache["post_filter"][f_idx][q_idx] = (pf_result.total_time_ms, pf_recall)
-            
-            bp_result = bitmap_prefilter.search(q_emb, config.CBO_TOP_K, fspec)
+
+            # BitmapPreFilter: brute-force exact — selectivity unused but passed for API consistency
+            bp_result = bitmap_prefilter.search(q_emb, config.CBO_TOP_K, fspec, selectivity=sel)
             bp_recall = len(set(bp_result.ids) & set(true_neighbors)) / len(true_neighbors) if true_neighbors else 1.0
             cache["bitmap_prefilter"][f_idx][q_idx] = (bp_result.total_time_ms, bp_recall)
 
-            bh_result = bitmap_hnsw_prefilter.search(q_emb, config.CBO_TOP_K, fspec)
+            # BitmapHNSWPreFilter: adaptive ef inflation — selectivity is critical here
+            bh_result = bitmap_hnsw_prefilter.search(q_emb, config.CBO_TOP_K, fspec, selectivity=sel)
             bh_recall = len(set(bh_result.ids) & set(true_neighbors)) / len(true_neighbors) if true_neighbors else 1.0
             cache["bitmap_hnsw_prefilter"][f_idx][q_idx] = (bh_result.total_time_ms, bh_recall)
             

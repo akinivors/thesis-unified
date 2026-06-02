@@ -48,11 +48,18 @@ class ContextualBanditOptimizer:
         self.n_warmup = getattr(config, "N_WARMUP", 2000)
         
         self.query_count = 0
-        
+
         # Freeze State
         self.is_frozen = False
         self.frozen_crossover_point: Optional[float] = None
         self._is_exploring_now = False
+
+        # Phase 1 fallback (Fix 3):
+        # Track the last non-None crossover estimate produced while still in
+        # Phase 1 (query_count < n_warmup).  If Phase 2 never detects a freeze
+        # (e.g. because a filter-gap leaves battleground buckets empty), callers
+        # can invoke apply_phase1_fallback() to use this as the frozen θ*.
+        self._last_phase1_crossover: Optional[float] = None
 
     def update_corpus_size(self, new_n_corpus: int) -> bool:
         """
@@ -144,9 +151,21 @@ class ContextualBanditOptimizer:
             self.qtable.update(selectivity, strategy_name, reward)
             
             new_crossover = self.qtable.check_freeze_condition(min_visits=self.n_min_visits)
-            
+
+            # Fix 3: record the last Phase 1 crossover before Phase 2 fires.
+            # Phase 1 uses coarser buckets that can still span the filter gap,
+            # so its crossover estimate is the best available fallback when
+            # Phase 2 battleground buckets are left permanently unvisited.
+            if self.query_count < self.n_warmup and new_crossover is not None:
+                self._last_phase1_crossover = new_crossover
+
             if not self.is_frozen:
-                if new_crossover is not None:
+                # Only allow freeze after N_WARMUP queries so Phase-2
+                # resampling (triggered at query_count == n_warmup) has
+                # already fired and all buckets have been visited.
+                # query_count is incremented *after* this block, so the
+                # first time this guard is True is on query n_warmup+1.
+                if new_crossover is not None and self.query_count >= self.n_warmup:
                     self.is_frozen = True
                     self.frozen_crossover_point = new_crossover
                     self.n_corpus_at_freeze = self.n_corpus
@@ -170,3 +189,29 @@ class ContextualBanditOptimizer:
         if self.is_frozen:
             return self.frozen_crossover_point
         return self.qtable.check_freeze_condition()
+
+    def apply_phase1_fallback(self) -> bool:
+        """
+        Apply the last Phase 1 crossover estimate as the frozen θ* when
+        Phase 2 failed to detect a freeze on its own.
+
+        This handles the case where fine-grained Phase 2 battleground buckets
+        are left permanently unvisited due to a gap in the training filter
+        set's selectivity distribution.  Phase 1's coarser (0.02-width) buckets
+        span the gap and produce a valid crossover estimate; that estimate is
+        stored in ``_last_phase1_crossover`` during training and applied here.
+
+        Returns True if the fallback was applied, False if it was not needed
+        (already frozen) or not available (no Phase 1 crossover was ever seen).
+        """
+        if self.is_frozen:
+            return False  # Phase 2 succeeded; nothing to do
+        if self._last_phase1_crossover is None:
+            return False  # No Phase 1 estimate was ever recorded
+        if self.query_count < self.n_warmup:
+            return False  # Phase 2 hasn't run yet; too early to fall back
+
+        self.is_frozen = True
+        self.frozen_crossover_point = self._last_phase1_crossover
+        self.n_corpus_at_freeze = self.n_corpus
+        return True

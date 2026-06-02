@@ -110,6 +110,7 @@ class FAISSIndex:
         query: np.ndarray,
         top_k: int,
         id_selector: Optional[faiss.IDSelector] = None,
+        selectivity: Optional[float] = None,
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Search the HNSW index, optionally restricting to a set of IDs.
 
@@ -121,6 +122,17 @@ class FAISSIndex:
             Number of results.
         id_selector : faiss.IDSelector, optional
             If provided, only IDs accepted by this selector are considered.
+        selectivity : float, optional
+            Fraction of corpus that passes the filter (0, 1].  When provided
+            alongside an id_selector, efSearch is inflated adaptively so the
+            HNSW graph traversal explores enough nodes to reach the sparse
+            filtered subgraph.
+
+            Formula: ef = clip(3 * top_k / selectivity, EF_QUALITY, EF_MAX)
+
+            Without this, a fixed ef=128 will miss most filtered results when
+            selectivity < 0.05 — the graph wastes all 128 steps on non-matching
+            nodes before finding any valid candidate.
 
         Returns
         -------
@@ -134,7 +146,20 @@ class FAISSIndex:
         if id_selector is not None:
             params = faiss.SearchParametersHNSW()
             params.sel = id_selector
-            params.efSearch = config.HNSW_EF_SEARCH
+
+            if selectivity is not None and selectivity > 0:
+                # Adaptive ef inflation for sparse filtered subgraphs.
+                # At sel=0.01, k=10: ef = clip(3000, 512, 8192) = 3000
+                # At sel=0.30, k=10: ef = clip(100,  512, 8192) = 512  (floor kicks in)
+                # At sel=0.60, k=10: ef = clip(50,   512, 8192) = 512  (floor kicks in)
+                adaptive_ef = int(3.0 * top_k / max(selectivity, 1e-4))
+                params.efSearch = min(
+                    max(adaptive_ef, config.HNSW_EF_QUALITY),
+                    config.HNSW_EF_MAX,
+                )
+            else:
+                params.efSearch = config.HNSW_EF_SEARCH
+
             distances, ids = self.hnsw_index.search(q, top_k, params=params)
         else:
             distances, ids = self.hnsw_index.search(q, top_k)

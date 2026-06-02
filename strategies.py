@@ -92,8 +92,25 @@ class FilterStrategy(ABC):
         query_embedding: np.ndarray,
         top_k: int,
         filter_spec: FilterSpec,
+        selectivity: Optional[float] = None,
     ) -> SearchResult:
-        """Execute a filtered top-K search."""
+        """Execute a filtered top-K search.
+
+        Parameters
+        ----------
+        query_embedding : np.ndarray
+            Pre-computed, un-normalised query vector.
+        top_k : int
+            Number of results to return.
+        filter_spec : FilterSpec
+            Metadata filter specification.
+        selectivity : float, optional
+            Estimated fraction of corpus matching the filter.  Strategies
+            that use HNSW with an IDSelector (BitmapHNSWPreFilter) use this
+            to adaptively inflate efSearch.  PostFilter uses it to inflate
+            the oversampling factor.  Can be left None for strategies that
+            don't benefit from it (BruteForce, NaivePreFilter, BitmapPreFilter).
+        """
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -130,6 +147,7 @@ class BruteForce(FilterStrategy):
         query_embedding: np.ndarray,
         top_k: int,
         filter_spec: FilterSpec,
+        selectivity: Optional[float] = None,
     ) -> SearchResult:
         t0 = time.perf_counter()
 
@@ -198,6 +216,7 @@ class NaivePreFilter(FilterStrategy):
         query_embedding: np.ndarray,
         top_k: int,
         filter_spec: FilterSpec,
+        selectivity: Optional[float] = None,
     ) -> SearchResult:
         # ── Step 1: Linear scan to find matching IDs ──────────────────────
         t0 = time.perf_counter()
@@ -253,12 +272,22 @@ class NaivePreFilter(FilterStrategy):
 class PostFilter(FilterStrategy):
     """HNSW search without filter → Python-side metadata filtering.
 
-    1. Query FAISS HNSW with ``top_k × expansion_factor`` (no filter).
+    1. Query FAISS HNSW with an adaptively inflated fetch count (no filter).
     2. For each returned candidate, check the metadata predicate.
     3. Keep the first ``top_k`` candidates that pass the filter.
 
-    Risk: if selectivity is very low (few documents match), we may not
-    find enough results even with a large expansion factor.
+    The fetch count adapts to selectivity so that the expected number of
+    matching candidates is always well above top_k:
+
+        fetch_n = top_k × max(expansion_factor, ceil(2 / selectivity))
+
+    At sel=0.10, top_k=10: fetch_n = 10 × max(100, 20) = 1,000  → expect 100 matches
+    At sel=0.01, top_k=10: fetch_n = 10 × max(100, 200) = 2,000 → expect 20 matches
+    At sel=0.60, top_k=10: fetch_n = 10 × max(100, 4)   = 1,000 → expect 600 matches
+
+    Risk: if selectivity is extremely low (< 0.001) the required fetch_n
+    approaches N, making this strategy degenerate.  The CBO guardrail
+    redirects such queries to BitmapPreFilter before they reach here.
     """
 
     name = "post_filter"
@@ -278,9 +307,17 @@ class PostFilter(FilterStrategy):
         query_embedding: np.ndarray,
         top_k: int,
         filter_spec: FilterSpec,
+        selectivity: Optional[float] = None,
     ) -> SearchResult:
+        # Adaptive expansion: inflate fetch_n when selectivity is low so that
+        # the expected number of filtered candidates stays safely above top_k.
+        if selectivity is not None and selectivity > 0:
+            adaptive_factor = max(self.expansion_factor, int(2.0 / max(selectivity, 1e-3)))
+        else:
+            adaptive_factor = self.expansion_factor
+
         fetch_n = min(
-            top_k * self.expansion_factor,
+            top_k * adaptive_factor,
             self.faiss_idx.hnsw_index.ntotal,
         )
 
@@ -331,6 +368,10 @@ class BitmapPreFilter(FilterStrategy):
     Compared to NaivePreFilter, the filtering step is orders of magnitude
     faster (bitmap set-intersection vs linear predicate scan).  The vector
     search step is identical.
+
+    This strategy is one of the two CBO arms (vs PostFilter).  Its latency
+    scales linearly with |filtered subset|, so it wins at low selectivity
+    and loses at high selectivity — exactly the crossover the CBO learns.
     """
 
     name = "bitmap_prefilter"
@@ -348,6 +389,7 @@ class BitmapPreFilter(FilterStrategy):
         query_embedding: np.ndarray,
         top_k: int,
         filter_spec: FilterSpec,
+        selectivity: Optional[float] = None,  # unused; brute-force needs no ef tuning
     ) -> SearchResult:
         # ── Step 1: Bitmap resolution (µs-level) ──────────────────────────
         t0 = time.perf_counter()
@@ -401,12 +443,17 @@ class BitmapHNSWPreFilter(FilterStrategy):
     """Roaring Bitmap lookup → HNSW search with IDSelector constraint.
 
     1. Resolve matching document IDs via bitmap set operations (µs).
-    2. Build a FAISS IDSelectorBatch from the matching IDs.
-    3. Search HNSW with the IDSelector — the graph is traversed normally
-       but only nodes passing the selector are considered as results.
+    2. Build a FAISS IDSelectorBitmap from the matching IDs (memory-efficient,
+       O(1) bit-check vs IDSelectorBatch's hash-set with O(1) avg + overhead).
+    3. Search HNSW with the IDSelector and adaptive efSearch — the graph is
+       traversed normally but only nodes passing the selector are returned.
 
-    This is the "proper" pre-filter approach: it uses the HNSW graph
-    structure (O(log N) traversal) instead of brute-force on the subset.
+    efSearch is inflated proportionally to 1/selectivity so that the HNSW
+    traversal explores enough nodes to reach the sparse filtered subgraph.
+    Without this, ef=128 fails catastrophically at sel < 0.05.
+
+    Note: this strategy is NOT a CBO arm — it is a benchmark baseline.
+    The CBO routes between BitmapPreFilter (exact) and PostFilter (approx).
     """
 
     name = "bitmap_hnsw_prefilter"
@@ -424,6 +471,7 @@ class BitmapHNSWPreFilter(FilterStrategy):
         query_embedding: np.ndarray,
         top_k: int,
         filter_spec: FilterSpec,
+        selectivity: Optional[float] = None,
     ) -> SearchResult:
         # ── Step 1: Bitmap resolution (µs-level) ──────────────────────────
         t0 = time.perf_counter()
@@ -441,12 +489,23 @@ class BitmapHNSWPreFilter(FilterStrategy):
                 candidates_after_filter=0,
             )
 
-        # ── Step 2: HNSW search with IDSelector ──────────────────────────
+        # ── Step 2: HNSW search with IDSelectorBitmap ────────────────────
+        # IDSelectorBitmap: raw bit array — O(1) check, 64x less memory than
+        # IDSelectorBatch (50KB vs 3.2MB for 400K docs, cache-friendly).
         t1 = time.perf_counter()
-        id_selector = faiss.IDSelectorBatch(matching_ids)
+        N = self.faiss_idx.hnsw_index.ntotal
+        bm = np.zeros((N + 7) // 8, dtype=np.uint8)
+        for idx in matching_ids:
+            bm[idx >> 3] |= np.uint8(1 << (idx & 7))
+        id_selector = faiss.IDSelectorBitmap(N, faiss.swig_ptr(bm))
+
         distances, ids = self.faiss_idx.search_hnsw(
-            query_embedding, top_k, id_selector=id_selector,
+            query_embedding, top_k,
+            id_selector=id_selector,
+            selectivity=selectivity,  # triggers adaptive ef inflation
         )
+        # bm must stay alive until after search() returns
+        del bm, id_selector
         search_ms = (time.perf_counter() - t1) * 1000
 
         # Map int IDs back to string IDs

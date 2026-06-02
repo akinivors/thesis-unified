@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bandit-CBO Behaviour Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f1117; --card: #1a1d27; --border: #2a2d3a;
+    --text: #e2e8f0; --muted: #8892a4;
+    --run0: #60a5fa; --run1: #f87171; --run2: #34d399;
+    --run3: #fbbf24;
+    --bm: #a78bfa; --pf: #fb923c; --oracle: #f9fafb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 13px; }
+  h1 { font-size: 20px; font-weight: 700; padding: 24px 32px 0; letter-spacing: -.3px; }
+  .subtitle { color: var(--muted); padding: 4px 32px 20px; font-size: 12px; }
+  .grid { display: grid; gap: 16px; padding: 0 24px 24px; }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  .g3 { grid-template-columns: 1fr 1fr 1fr; }
+  .g4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .g1 { grid-template-columns: 1fr; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .card h2 { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; margin-bottom: 12px; }
+  canvas { max-height: 240px; }
+  canvas.tall { max-height: 300px; }
+  canvas.xtall { max-height: 360px; }
+
+  /* Summary cards */
+  .run-card { border-top: 3px solid var(--border); }
+  .run-card.r0 { border-top-color: var(--run0); }
+  .run-card.r1 { border-top-color: var(--run1); }
+  .run-card.r2 { border-top-color: var(--run2); }
+  .run-card.r3 { border-top-color: var(--run3); }
+  .run-label { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .run-sub  { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+  .kv { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .kv:last-child { border-bottom: none; }
+  .kv .k { color: var(--muted); }
+  .kv .v { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: .4px; margin-left: 6px; }
+  .tag.green { background: #064e3b; color: #34d399; }
+  .tag.red   { background: #450a0a; color: #f87171; }
+  .tag.yellow { background: #451a03; color: #fbbf24; }
+
+  /* Legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; font-size: 11px; }
+  .leg { display: flex; align-items: center; gap: 5px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .line-dot { width: 16px; height: 3px; border-radius: 2px; }
+
+  /* Annotations */
+  .note { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+  .highlight { color: #fbbf24; font-weight: 600; }
+  .good { color: #34d399; }
+  .bad  { color: #f87171; }
+
+  /* Divider */
+  .section-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; padding: 20px 32px 0; }
+</style>
+</head>
+<body>
+
+<h1>Bandit-CBO · System Behaviour Dashboard</h1>
+<p class="subtitle">Comparing three experimental runs: 200k base · 671k unfixed (L_MAX=100ms) · 671k fixed (L_MAX=336ms, last-crossover detection)</p>
+
+<!-- ── RUN SUMMARY CARDS ──────────────────────────────── -->
+<p class="section-title">Run Overview</p>
+<div class="grid g4" style="padding-top:12px">
+
+  <div class="card run-card r0">
+    <div class="run-label" style="color:var(--run0)">Run A — 200k Base</div>
+    <div class="run-sub">n=200k · L_MAX=100ms · θ*=0.295</div>
+    <div class="kv"><span class="k">Froze at</span><span class="v">step 2587 <span class="tag green">✓</span></span></div>
+    <div class="kv"><span class="k">CBO reward</span><span class="v">0.767</span></div>
+    <div class="kv"><span class="k">vs Always-Post</span><span class="v good">+0.143</span></div>
+    <div class="kv"><span class="k">Oracle gap</span><span class="v">0.085</span></div>
+    <div class="kv"><span class="k">CBO SLA</span><span class="v">90.6%</span></div>
+  </div>
+
+  <div class="card run-card r1">
+    <div class="run-label" style="color:var(--run1)">Run B — 671k Unfixed</div>
+    <div class="run-sub">n=671k · L_MAX=100ms · θ*=none</div>
+    <div class="kv"><span class="k">Froze at</span><span class="v">never <span class="tag red">✗</span></span></div>
+    <div class="kv"><span class="k">CBO reward</span><span class="v">0.661</span></div>
+    <div class="kv"><span class="k">vs Always-Post</span><span class="v good">+0.026</span></div>
+    <div class="kv"><span class="k">Oracle gap</span><span class="v">0.027</span></div>
+    <div class="kv"><span class="k">CBO SLA</span><span class="v">73.1%</span></div>
+  </div>
+
+  <div class="card run-card r2">
+    <div class="run-label" style="color:var(--run2)">Run C — 671k Fixed (θ*=0.16)</div>
+    <div class="run-sub">n=671k · L_MAX=336ms · θ*=0.160</div>
+    <div class="kv"><span class="k">Froze at</span><span class="v">step 2001 <span class="tag green">✓</span></span></div>
+    <div class="kv"><span class="k">CBO reward</span><span class="v">0.734</span></div>
+    <div class="kv"><span class="k">vs Always-Post</span><span class="v good">+0.085</span></div>
+    <div class="kv"><span class="k">Oracle gap</span><span class="v">0.105</span></div>
+    <div class="kv"><span class="k">CBO SLA</span><span class="v">76.9%</span></div>
+  </div>
+
+  <div class="card run-card r3" style="opacity:.55">
+    <div class="run-label" style="color:var(--run3)">Run D — 671k Final (pending)</div>
+    <div class="run-sub">n=671k · L_MAX=336ms · last-crossover fix</div>
+    <div class="kv"><span class="k">Froze at</span><span class="v">— <span class="tag yellow">pending</span></span></div>
+    <div class="kv"><span class="k">CBO reward</span><span class="v">~0.745 est.</span></div>
+    <div class="kv"><span class="k">vs Always-Post</span><span class="v">~+0.10 est.</span></div>
+    <div class="kv"><span class="k">Oracle gap</span><span class="v">~0.093 est.</span></div>
+    <div class="kv"><span class="k">CBO SLA</span><span class="v">~78% est.</span></div>
+  </div>
+
+</div>
+
+<!-- ── LEARNING CURVES ────────────────────────────────── -->
+<p class="section-title">Learning Curves — Q-values and SLA over training</p>
+<div class="grid g3" style="padding-top:12px">
+
+  <div class="card">
+    <h2>Run A · 200k · Q-values @ sel=0.30</h2>
+    <div class="legend">
+      <span class="leg"><span class="dot" style="background:var(--bm)"></span>q_bitmap@0.30</span>
+      <span class="leg"><span class="dot" style="background:var(--pf)"></span>q_post@0.30</span>
+      <span class="leg"><span class="dot" style="background:#94a3b8"></span>SLA rate (last 100)</span>
+    </div>
+    <canvas id="lc0" class="tall"></canvas>
+    <p class="note">Froze at step <span class="highlight">2587</span>. θ* = 0.295. Post Q-value surpassed bitmap at ~30% selectivity as expected under L_MAX=100ms.</p>
+  </div>
+
+  <div class="card">
+    <h2>Run B · 671k Unfixed · Q-values @ sel=0.30</h2>
+    <div class="legend">
+      <span class="leg"><span class="dot" style="background:var(--bm)"></span>q_bitmap@0.30</span>
+      <span class="leg"><span class="dot" style="background:var(--pf)"></span>q_post@0.30</span>
+      <span class="leg"><span class="dot" style="background:#94a3b8"></span>SLA rate</span>
+    </div>
+    <canvas id="lc1" class="tall"></canvas>
+    <p class="note"><span class="bad">Never froze.</span> Bitmap Q-value decayed monotonically to 0.24 — L_MAX=100ms kills bitmap reward above 10% selectivity. Phase-2 gap at 10–11.5% blocked detection.</p>
+  </div>
+
+  <div class="card">
+    <h2>Run C · 671k Fixed · Q-values @ sel=0.30</h2>
+    <div class="legend">
+      <span class="leg"><span class="dot" style="background:var(--bm)"></span>q_bitmap@0.30</span>
+      <span class="leg"><span class="dot" style="background:var(--pf)"></span>q_post@0.30</span>
+      <span class="leg"><span class="dot" style="background:#94a3b8"></span>SLA rate</span>
+    </div>
+    <canvas id="lc2" class="tall"></canvas>
+    <p class="note">Froze at step <span class="highlight">2001</span> (first step after Phase 2). θ*=0.160 — the first bitmap→post crossing, not the last. At sel=0.30, bitmap Q-value is still above post due to L_MAX=336ms giving bitmap L_norm≈0.44.</p>
+  </div>
+
+</div>
+
+<!-- ── ZONE SLA ────────────────────────────────────────── -->
+<p class="section-title">Zone Performance</p>
+<div class="grid g2" style="padding-top:12px">
+
+  <div class="card">
+    <h2>CBO SLA Rate by Zone — all runs</h2>
+    <div class="legend">
+      <span class="leg"><span class="dot" style="background:var(--run0)"></span>Run A (200k)</span>
+      <span class="leg"><span class="dot" style="background:var(--run1)"></span>Run B (671k unfixed)</span>
+      <span class="leg"><span class="dot" style="background:var(--run2)"></span>Run C (671k fixed)</span>
+    </div>
+    <canvas id="zoneSLA" class="xtall"></canvas>
+    <p class="note">
+      <span class="highlight">10–20% zone</span>: Run B collapsed to <span class="bad">48%</span> — bitmap exceeded L_MAX=100ms, PostFilter recall failed. Run C rescued it to <span class="good">77%</span> with L_MAX=336ms routing bitmap correctly.
+      <br>Run A's 30–40% dip (75%) is the shadow zone where PostFilter barely edges bitmap in expectation.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>CBO vs Baselines — Avg Reward by Zone</h2>
+    <div class="legend">
+      <span class="leg"><span class="dot" style="background:var(--run2)"></span>CBO (Run C)</span>
+      <span class="leg"><span class="dot" style="background:var(--pf)"></span>Always Post</span>
+      <span class="leg"><span class="dot" style="background:var(--bm)"></span>Always Bitmap</span>
+      <span class="leg"><span class="dot" style="background:var(--oracle)"></span>Oracle</span>
+    </div>
+    <canvas id="zoneReward" class="xtall"></canvas>
+    <p class="note">
+      <span class="highlight">0–10%</span>: CBO matches bitmap (correct routing). <span class="highlight">10–20%</span>: CBO beats Always-Post by routing 3 of 4 filters to bitmap.
+      <br><span class="highlight">20–40%</span>: CBO ≈ PostFilter. Oracle gap here is the irreducible per-query fallback advantage — not a routing error.
+    </p>
+  </div>
+
+</div>
+
+<!-- ── ORACLE GAP BREAKDOWN ────────────────────────────── -->
+<p class="section-title">Oracle Gap Decomposition — Run C (671k fixed, θ*=0.16)</p>
+<div class="grid g1" style="padding-top:12px">
+  <div class="card">
+    <h2>Per-filter oracle gap = routing error (fixable) + irreducible per-query variance</h2>
+    <div class="legend">
+      <span class="leg"><span class="dot" style="background:#f87171"></span>Routing error (wrong θ* → wrong arm in expectation)</span>
+      <span class="leg"><span class="dot" style="background:#475569"></span>Irreducible gap (per-query PostFilter recall variance — unfixable by any threshold)</span>
+    </div>
+    <canvas id="oracleGap" style="max-height:200px"></canvas>
+    <p class="note">
+      Three filters have routing errors: <span class="highlight">sel=15.93%</span> (predictor overestimates as >16%, routes to PostFilter instead of bitmap, error=0.316), <span class="highlight">sel=20.97%</span> (bitmap better but θ*=16% sends to PostFilter, error=0.209), <span class="highlight">sel=23.42%</span> (bitmap barely better, error=0.039).
+      <br>Global oracle gap 0.105 = routing error 0.019 + irreducible floor 0.085. After the pending last-crossover fix (θ*≈0.26), routing error drops to ~0.007 → total gap ~0.093.
+    </p>
+  </div>
+</div>
+
+<!-- ── Q-TABLE ───────────────────────────────────────────── -->
+<p class="section-title">Q-Table at Freeze — Run C (671k fixed)</p>
+<div class="grid g2" style="padding-top:12px">
+
+  <div class="card">
+    <h2>Q-values at visited buckets (bitmap vs post) — frozen state</h2>
+    <canvas id="qtable" class="xtall"></canvas>
+    <p class="note">
+      Bitmap wins left of θ*=0.160 (blue above orange). Post wins right. Non-monotone: post wins at 0.175–0.18 (18% filter), bitmap wins again at 0.195–0.26 (20–26% filters), post wins permanently from 0.295+.
+      <br>The <span class="highlight">last-crossover fix</span> targets the final crossing at ~0.26, which better represents where post permanently dominates.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Global reward: CBO vs baselines across all three runs</h2>
+    <canvas id="globalReward" class="xtall"></canvas>
+    <p class="note">
+      Run B's "tiny" oracle gap (0.027) was deceptively good — L_MAX=100ms left bitmap dead above 10%, making the landscape trivial.
+      Run C's larger gap (0.105) reflects a richer landscape where both arms have value in 20–40%.
+      <br>CBO reward improvement from Run B→C: <span class="good">+11%</span>. vs Always-Post: <span class="good">+3× the advantage</span>.
+    </p>
+  </div>
+
+</div>
+
+
+<script>
+// ── Shared chart defaults ──────────────────────────────────────────────────
+Chart.defaults.color = '#8892a4';
+Chart.defaults.borderColor = '#2a2d3a';
+Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+Chart.defaults.font.size = 11;
+
+const RUN_COLORS = ['#60a5fa','#f87171','#34d399','#fbbf24'];
+const ZONES = ['0–10%','10–20%','20–30%','30–40%','40–50%','50–90%'];
+
+// ── Learning curve data ────────────────────────────────────────────────────
+const lcData = {
+  // [steps, bm30, pf30, sla, crossover, frozen]
+  run0: {
+    steps:[100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000,2100,2200,2300,2400,2500,2587],
+    bm:   [0.8849,0.8276,0.7388,0.7007,0.7007,0.7007,0.7007,0.7007,0.7007,0.7007,0.6424,0.6424,0.6424,0.6424,0.6424,0.6424,0.6424,0.6424,0.6424,0.6424,0.6382,0.6382,0.6382,0.6382,0.6382,0.6382],
+    pf:   [0.9025,0.7299,0.6282,0.6208,0.6208,0.8543,0.9025,0.8543,0.8543,0.7497,0.9036,0.8566,0.8566,0.9036,0.9036,0.8543,0.8543,0.8543,0.7497,0.7497,0.7497,0.7497,0.7497,0.7497,0.7497,0.7497],
+    sla:  [0.83,0.77,0.83,0.78,0.84,0.82,0.86,0.87,0.87,0.84,0.90,0.83,0.82,0.80,0.84,0.82,0.84,0.82,0.82,0.80,0.82,0.84,0.84,0.80,0.84,0.84],
+    freezeStep: 2587
+  },
+  run1: {
+    // 671k unfixed — every 500 steps (downsampled)
+    steps:[100,500,1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000,9500,10000,10500,11000,11500,12000,12500,13000,13500,14000,14500,15000],
+    bm:   [0.901,0.604,0.504,0.504,0.424,0.393,0.354,0.348,0.336,0.331,0.323,0.315,0.301,0.289,0.289,0.280,0.274,0.274,0.272,0.269,0.266,0.258,0.256,0.253,0.251,0.251,0.243,0.241,0.238,0.238,0.236],
+    pf:   [1.000,0.637,0.641,0.551,0.585,0.553,0.509,0.580,0.625,0.699,0.643,0.647,0.630,0.574,0.594,0.611,0.624,0.645,0.638,0.616,0.659,0.628,0.575,0.547,0.531,0.589,0.600,0.623,0.670,0.691,0.608],
+    sla:  [0.85,0.79,0.66,0.72,0.77,0.72,0.81,0.76,0.75,0.79,0.74,0.70,0.78,0.81,0.71,0.75,0.72,0.76,0.68,0.73,0.77,0.74,0.73,0.71,0.74,0.70,0.79,0.73,0.74,0.74,0.67],
+    freezeStep: null
+  },
+  run2: {
+    steps:[100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000,2001],
+    bm:   [0.9479,0.9067,0.8397,0.7411,0.7161,0.7001,0.6657,0.6657,0.6427,0.6232,0.5769,0.5166,0.5189,0.5189,0.4282,0.4282,0.4397,0.4397,0.4397,0.4397,0.4397],
+    pf:   [1.000,0.9029,0.7399,0.7022,0.7022,0.6848,0.7115,0.6745,0.5693,0.5236,0.5242,0.5242,0.4862,0.4499,0.4499,0.5263,0.5465,0.6029,0.6509,0.6927,0.6927],
+    sla:  [0.86,0.78,0.80,0.81,0.74,0.79,0.86,0.86,0.80,0.84,0.83,0.81,0.82,0.76,0.85,0.85,0.80,0.81,0.87,0.85,0.85],
+    freezeStep: 2001
+  }
+};
+
+function makeLcChart(id, data, color) {
+  const ctx = document.getElementById(id);
+  const freezeIdx = data.freezeStep ? data.steps.indexOf(data.freezeStep) : -1;
+
+  // Annotation plugin is not loaded; draw freeze as a point
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: data.steps,
+      datasets: [
+        { label:'q_bitmap@0.30', data: data.bm, borderColor:'#a78bfa', backgroundColor:'transparent',
+          borderWidth:2, pointRadius:0, tension:0.3 },
+        { label:'q_post@0.30',   data: data.pf, borderColor:'#fb923c', backgroundColor:'transparent',
+          borderWidth:2, pointRadius:0, tension:0.3 },
+        { label:'SLA rate',      data: data.sla, borderColor:'#475569', backgroundColor:'transparent',
+          borderWidth:1.5, pointRadius:0, tension:0.3, borderDash:[4,3] },
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:true, animation:false,
+      plugins:{ legend:{display:false},
+        tooltip:{mode:'index', intersect:false,
+          callbacks:{
+            afterBody(items){
+              const i = items[0].dataIndex;
+              if(i === freezeIdx) return ['★ FROZEN'];
+              return [];
+            }
+          }
+        }
+      },
+      scales:{
+        x:{ ticks:{maxTicksLimit:6}, title:{display:true,text:'Training step'} },
+        y:{ min:0, max:1.05, ticks:{stepSize:0.2} }
+      }
+    }
+  });
+}
+
+makeLcChart('lc0', lcData.run0, RUN_COLORS[0]);
+makeLcChart('lc1', lcData.run1, RUN_COLORS[1]);
+makeLcChart('lc2', lcData.run2, RUN_COLORS[2]);
+
+// ── Zone SLA chart ─────────────────────────────────────────────────────────
+const zoneSLAData = {
+  run0: [0.9917, 0.9950, 0.9925, 0.7475, 0.8120, 0.8085],
+  run1: [0.9467, 0.4825, 0.6225, 0.6225, 0.7683, 0.8394],
+  run2: [0.9883, 0.7662, 0.6100, 0.6088, 0.7700, 0.8378],
+};
+
+new Chart(document.getElementById('zoneSLA'), {
+  type:'bar',
+  data:{
+    labels: ZONES,
+    datasets:[
+      { label:'Run A (200k)', data:zoneSLAData.run0, backgroundColor:RUN_COLORS[0]+'99', borderColor:RUN_COLORS[0], borderWidth:1.5 },
+      { label:'Run B (671k unfixed)', data:zoneSLAData.run1, backgroundColor:RUN_COLORS[1]+'99', borderColor:RUN_COLORS[1], borderWidth:1.5 },
+      { label:'Run C (671k fixed)', data:zoneSLAData.run2, backgroundColor:RUN_COLORS[2]+'99', borderColor:RUN_COLORS[2], borderWidth:1.5 },
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:true, animation:false,
+    plugins:{ legend:{display:false} },
+    scales:{
+      x:{ grid:{color:'#1e2330'} },
+      y:{ min:0, max:1.05, ticks:{callback:v=>(v*100).toFixed(0)+'%'}, title:{display:true,text:'SLA rate'} }
+    }
+  }
+});
+
+// ── Zone Reward chart (Run C breakdown) ───────────────────────────────────
+const zoneRewardData = {
+  cbo:   [0.8684, 0.6391, 0.6044, 0.6015, 0.7642, 0.8264],
+  post:  [0.2633, 0.4449, 0.6038, 0.6026, 0.7659, 0.8296],
+  bm:    [0.8696, 0.7089, 0.5686, 0.4307, 0.3278, 0.1562],
+  oracle:[0.9042, 0.8351, 0.8215, 0.7692, 0.8387, 0.8555],
+};
+
+new Chart(document.getElementById('zoneReward'), {
+  type:'bar',
+  data:{
+    labels: ZONES,
+    datasets:[
+      { label:'CBO', data:zoneRewardData.cbo, backgroundColor:RUN_COLORS[2]+'bb', borderColor:RUN_COLORS[2], borderWidth:1.5 },
+      { label:'Always Post', data:zoneRewardData.post, backgroundColor:'#fb923c88', borderColor:'#fb923c', borderWidth:1.5 },
+      { label:'Always Bitmap', data:zoneRewardData.bm, backgroundColor:'#a78bfa88', borderColor:'#a78bfa', borderWidth:1.5 },
+      { type:'line', label:'Oracle', data:zoneRewardData.oracle, borderColor:'#f1f5f9',
+        backgroundColor:'transparent', borderDash:[5,3], borderWidth:1.5,
+        pointStyle:'cross', pointRadius:4 },
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:true, animation:false,
+    plugins:{ legend:{display:false} },
+    scales:{
+      x:{ grid:{color:'#1e2330'} },
+      y:{ min:0, max:1.0, title:{display:true,text:'Avg reward'} }
+    }
+  }
+});
+
+// ── Oracle gap stacked bar ────────────────────────────────────────────────
+const filterSels = [3.16,7.92,9.03,11.95,14.63,15.93,18.04,20.97,23.42,24.84,26.14,
+  30.69,31.99,33.85,39.34,48.49,48.59,48.63,48.72,48.78,48.91,
+  50.64,50.77,53.23,55.40,55.53,62.11,62.24,64.40,100.0];
+const minGaps = [0.0047,0.0426,0.0565,0.0737,0.0914,0.1084,0.1881,0.1460,0.2151,0.1355,0.1232,
+  0.2040,0.1856,0.1710,0.1057,0.0838,0.0980,0.0547,0.0560,0.0839,0.0608,
+  0.0647,0.0465,0.0410,0.0359,0.0301,0.0062,0.0075,0.0010,0.0000];
+const routingErrs = [0,0.0034,0,0.0036,0.0027,0.3159,0,0.2093,0.0391,0,0,
+  0.0025,0.0022,0,0,0,0,0,0.0066,0.0017,0.0033,
+  0,0,0,0.0128,0.0074,0,0,0.0099,0];
+
+new Chart(document.getElementById('oracleGap'), {
+  type:'bar',
+  data:{
+    labels: filterSels.map(s=>s+'%'),
+    datasets:[
+      { label:'Routing error (fixable)', data:routingErrs, backgroundColor:'#f8717166', borderColor:'#f87171', borderWidth:1 },
+      { label:'Irreducible gap', data:minGaps, backgroundColor:'#47556988', borderColor:'#64748b', borderWidth:1 },
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:true, animation:false,
+    plugins:{ legend:{display:false}, tooltip:{mode:'index',intersect:false} },
+    scales:{
+      x:{ stacked:true, ticks:{maxTicksLimit:15, maxRotation:45} },
+      y:{ stacked:true, max:0.55, title:{display:true,text:'Oracle gap per filter'} }
+    }
+  }
+});
+
+// ── Q-table heatmap (line chart showing Q-values at visited buckets) ────────
+const qtVisited = [
+  {sel:0.065, qbm:0.852, qpf:0.558, v:239},  // [0.03-0.13] midpoint ~ 0.065 for wide bucket
+  {sel:0.1575, qbm:0.717, qpf:0.503, v:130},
+  {sel:0.1775, qbm:0.695, qpf:0.735, v:64},
+  {sel:0.1975, qbm:0.603, qpf:0.538, v:75},
+  {sel:0.2375, qbm:0.599, qpf:0.514, v:136},
+  {sel:0.2575, qbm:0.604, qpf:0.561, v:76},
+  {sel:0.2975, qbm:0.440, qpf:0.693, v:58},
+  {sel:0.3175, qbm:0.569, qpf:0.651, v:78},
+  {sel:0.3375, qbm:0.554, qpf:0.599, v:73},
+  {sel:0.6375, qbm:0.498, qpf:0.793, v:1006}, // [0.375-0.9] midpoint
+];
+
+new Chart(document.getElementById('qtable'), {
+  type:'scatter',
+  data:{
+    datasets:[
+      {
+        label:'q_bitmap', data:qtVisited.map(d=>({x:d.sel,y:d.qbm})),
+        backgroundColor:'#a78bfa', borderColor:'#a78bfa',
+        pointRadius: qtVisited.map(d=>Math.max(4, Math.sqrt(d.v)*0.25)),
+        showLine:true, tension:0.2, borderWidth:1.5
+      },
+      {
+        label:'q_post', data:qtVisited.map(d=>({x:d.sel,y:d.qpf})),
+        backgroundColor:'#fb923c', borderColor:'#fb923c',
+        pointRadius: qtVisited.map(d=>Math.max(4, Math.sqrt(d.v)*0.25)),
+        showLine:true, tension:0.2, borderWidth:1.5
+      },
+      // θ* vertical reference
+      {
+        label:'θ*=0.160', data:[{x:0.160,y:0},{x:0.160,y:1.05}],
+        borderColor:'#34d399', borderDash:[4,3], borderWidth:2,
+        pointRadius:0, showLine:true, type:'line'
+      }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:true, animation:false,
+    plugins:{ legend:{display:false},
+      tooltip:{callbacks:{
+        label(ctx){
+          const i = ctx.dataIndex;
+          if(ctx.dataset.label==='θ*=0.160') return 'θ* = 0.160';
+          const arm = ctx.dataset.label;
+          const d = qtVisited[i];
+          return `${arm} = ${ctx.parsed.y.toFixed(3)} (${d.v} visits)`;
+        }
+      }}
+    },
+    scales:{
+      x:{ min:0, max:0.75, title:{display:true,text:'Selectivity (σ)'} },
+      y:{ min:0, max:1.1, title:{display:true,text:'Q-value'} }
+    }
+  }
+});
+
+// ── Global reward comparison ──────────────────────────────────────────────
+new Chart(document.getElementById('globalReward'), {
+  type:'bar',
+  data:{
+    labels:['Run A\n200k', 'Run B\n671k unfixed', 'Run C\n671k fixed'],
+    datasets:[
+      { label:'CBO', data:[0.767,0.661,0.734], backgroundColor:[RUN_COLORS[0]+'bb',RUN_COLORS[1]+'bb',RUN_COLORS[2]+'bb'],
+        borderColor:RUN_COLORS, borderWidth:2 },
+      { label:'Always PostFilter', data:[0.624,0.635,0.649], backgroundColor:'#fb923c44', borderColor:'#fb923c', borderWidth:1.5 },
+      { label:'Always Bitmap', data:[0.477,0.073,0.427], backgroundColor:'#a78bfa44', borderColor:'#a78bfa', borderWidth:1.5 },
+      { type:'line', label:'Oracle', data:[0.852,0.688,0.838], borderColor:'#f1f5f9',
+        backgroundColor:'transparent', borderDash:[5,3], borderWidth:1.5,
+        pointStyle:'cross', pointRadius:6 },
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:true, animation:false,
+    plugins:{ legend:{display:false} },
+    scales:{
+      x:{ grid:{display:false} },
+      y:{ min:0, max:1.0, title:{display:true,text:'Avg reward'} }
+    }
+  }
+});
+</script>
+</body>
+</html>

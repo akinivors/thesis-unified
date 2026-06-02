@@ -147,24 +147,53 @@ class QTable:
                         self.Q[new_i][arm] = acc[arm] / acc["q_count"]
                     self.N[new_i] = acc["n_sum"]
 
-    def check_freeze_condition(self, min_visits: int = config.CBO_FREEZE_MIN_VISITS) -> float | None:
-        """Check if adjacent buckets show a stable crossover point."""
+    def check_freeze_condition(
+        self,
+        min_visits: int = config.CBO_FREEZE_MIN_VISITS,
+        max_gap: int = config.CBO_FREEZE_MAX_GAP,
+    ) -> float | None:
+        """
+        Check for a stable bitmap→post crossover across visited buckets.
+
+        Original behaviour (max_gap=0): requires strictly adjacent visited
+        buckets with a sign flip.
+
+        Extended behaviour (max_gap>0): allows up to ``max_gap`` consecutively
+        unvisited Phase-2 buckets between the last bitmap-winning and the first
+        post-winning visited bucket.  This handles training filter sets that
+        leave a selectivity gap in the battleground region (e.g. filters jump
+        from 9 % to 12 %, leaving 10–11.5 % Phase-2 buckets permanently empty).
+
+        Returns the upper bound of the last bitmap-winning visited bucket, i.e.
+        the learned crossover threshold θ*.
+        """
         with self._lock:
-            for i in range(len(self.buckets) - 1):
-                q_i = self.Q[i]
-                q_next = self.Q[i+1]
-                n_i = self.N[i]
-                n_next = self.N[i+1]
+            # Collect indices of sufficiently visited buckets in order.
+            visited = [i for i in range(len(self.buckets)) if self.N[i] >= min_visits]
+            last_crossover = None
 
-                if n_i >= min_visits and n_next >= min_visits:
-                    diff_i = q_i[self.ARMS[0]] - q_i[self.ARMS[1]]
-                    diff_next = q_next[self.ARMS[0]] - q_next[self.ARMS[1]]
+            for pos in range(len(visited) - 1):
+                i = visited[pos]
+                j = visited[pos + 1]
 
-                    # Flip from bitmap_prefilter > post_filter to post_filter > bitmap_prefilter
-                    if diff_i > 0 and diff_next < 0:
-                        # The boundary between bucket i and i+1 is the crossover point
-                        return self.buckets[i][1]
-            return None
+                # Number of unvisited buckets between i and j.
+                gap = j - i - 1
+                if gap > max_gap:
+                    continue
+
+                diff_i = self.Q[i][self.ARMS[0]] - self.Q[i][self.ARMS[1]]   # bitmap - post @ i
+                diff_j = self.Q[j][self.ARMS[0]] - self.Q[j][self.ARMS[1]]   # bitmap - post @ j
+
+                # Sign flip: bitmap wins at i, post wins at j.
+                # Keep updating last_crossover — we want the LAST such flip, not
+                # the first.  A non-monotone reward landscape (bitmap better at
+                # e.g. 21 %, post better at 18 %, bitmap again at 21–24 %, post
+                # permanently from 26 %+) means the first crossing is a local
+                # dip; only after the final crossing does post stay dominant.
+                if diff_i > 0 and diff_j < 0:
+                    last_crossover = self.buckets[i][1]
+
+            return last_crossover
 
     def get_snapshot(self) -> List[Dict]:
         with self._lock:
