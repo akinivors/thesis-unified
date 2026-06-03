@@ -84,6 +84,9 @@ N_WARMUP           = 5000     # Queries before Phase-2 bucket resampling is trig
                                # crossover (~0.035 at 30% selectivity) to converge before
                                # Phase 2 fires.  5000 gives ~160 visits/bucket in Phase 1,
                                # enough to resolve margins as narrow as 0.03 reliably.
+N_WARMUP_BASE      = 5000     # Immutable baseline for compute_n_warmup.  Never mutate
+                               # this constant — it is the fixed reference from which
+                               # adaptive scaling is computed at every corpus size.
 
 
 # ── Adaptive L_MAX ─────────────────────────────────────────────────────────────
@@ -100,3 +103,25 @@ def compute_l_max(n_docs: int) -> float:
     Example: 671 750 docs → 100 × (671 750 / 200 000) ≈ 336 ms
     """
     return CBO_L_MAX_BASE * max(1.0, n_docs / CBO_L_MAX_REF_DOCS)
+
+
+def compute_n_warmup(n_docs: int) -> int:
+    """
+    Scale N_WARMUP linearly with corpus size.
+
+    The number of observations needed to resolve the reward margin at the
+    crossover grows as margin² shrinks.  The margin narrows as the corpus
+    grows (adaptive L_MAX keeps bitmap L_norm roughly constant, but
+    PostFilter SLA varies), so the convergence requirement scales with
+    corpus size.
+
+    The baseline of 5 000 is sufficient at 200k (delivers ~4.4× the
+    required observations).  Scaling linearly ensures the same safety
+    margin is maintained at larger scales.
+
+    Examples:
+        200 000 docs → 5 000  (baseline, unchanged)
+        500 000 docs → 12 500
+        671 750 docs → 16 794
+    """
+    return max(N_WARMUP_BASE, int(N_WARMUP_BASE * (n_docs / CBO_L_MAX_REF_DOCS)))

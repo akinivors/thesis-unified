@@ -246,9 +246,14 @@ def train_phase(
     n_warmup: int,
 ) -> Tuple[int, List[LcPoint]]:
 
+    # Allow 1.5× the warmup budget for Phase-2 learning after resampling.
+    # This ensures the training ceiling is always above N_WARMUP regardless
+    # of corpus size, and is never the reason a freeze fails to trigger.
+    max_training = max(MAX_TRAINING_QUERIES, int(1.5 * n_warmup))
+
     log.info(
         "  Training CBO (max %d queries, N_WARMUP=%d) …",
-        MAX_TRAINING_QUERIES, n_warmup,
+        max_training, n_warmup,
     )
     curve: List[LcPoint] = []
     win_sla: List[float] = []
@@ -273,7 +278,7 @@ def train_phase(
             q_bm_040=round(b4, 4), q_pf_040=round(p4, 4),
         )
 
-    for step in range(MAX_TRAINING_QUERIES):
+    for step in range(max_training):
         fspec = random.choice(filters)
         qi    = random.randrange(n_queries)
         fi    = filters.index(fspec)
@@ -310,13 +315,13 @@ def train_phase(
 
     if frozen_at == -1:
         if optimizer.apply_phase1_fallback():
-            frozen_at = MAX_TRAINING_QUERIES
+            frozen_at = max_training
             log.info("  Phase-1 fallback applied  θ* = %.4f",
                      optimizer.frozen_crossover_point)
         else:
-            log.warning("  CBO did NOT freeze within %d queries.", MAX_TRAINING_QUERIES)
-            frozen_at = MAX_TRAINING_QUERIES
-        curve.append(snap(MAX_TRAINING_QUERIES))
+            log.warning("  CBO did NOT freeze within %d queries.", max_training)
+            frozen_at = max_training
+        curve.append(snap(max_training))
 
     return frozen_at, curve
 
@@ -525,10 +530,18 @@ def main():
         log.info("PHASE %d / %d  —  %d documents", phase_idx, len(corpus_sizes), n_docs)
         log.info("━" * 72)
 
-        # Adaptive L_MAX for this corpus size
+        # Adaptive L_MAX and N_WARMUP for this corpus size
         l_max = config.compute_l_max(n_docs)
         config.CBO_L_MAX = l_max
         log.info("  Adaptive L_MAX = %.1f ms", l_max)
+
+        n_warmup = config.compute_n_warmup(n_docs)
+        # Write n_warmup back to config.N_WARMUP so the optimizer reads the correct
+        # value at init time (optimizer.__init__ does getattr(config, "N_WARMUP")).
+        # This is now safe: compute_n_warmup() uses N_WARMUP_BASE (immutable), so
+        # mutating N_WARMUP here does NOT cause the compounding bug from before.
+        config.N_WARMUP = n_warmup
+        log.info("  Adaptive N_WARMUP = %d", n_warmup)
 
         # Build corpus
         emb, meta, faiss_idx, bmap_idx = build_phase_corpus(n_docs, full_emb, full_meta)
@@ -554,7 +567,7 @@ def main():
         # Train
         optimizer = ContextualBanditOptimizer(n_corpus=n_docs, mode="epsilon_greedy")
         frozen_at, curve = train_phase(
-            optimizer, predictor, filters, cache, args.n_queries, args.n_warmup
+            optimizer, predictor, filters, cache, args.n_queries, n_warmup
         )
 
         theta = optimizer.frozen_crossover_point
@@ -600,7 +613,7 @@ def main():
             "phase":                  phase_idx,
             "n_docs":                 n_docs,
             "l_max":                  round(l_max, 2),
-            "n_warmup":               args.n_warmup,
+            "n_warmup":               n_warmup,
             "frozen_at_step":         frozen_at,
             "crossover_theta":        round(theta, 4) if theta else None,
             "crossover_empirical":    crossover_empirical,
@@ -618,7 +631,7 @@ def main():
             "phase":        phase_idx,
             "n_docs":       n_docs,
             "l_max_ms":     round(l_max, 1),
-            "n_warmup":     args.n_warmup,
+            "n_warmup":     n_warmup,
             "frozen_step":  frozen_at,
             "theta_star":   round(theta, 4) if theta else "N/A",
             "theta_empirical": crossover_empirical if crossover_empirical else "N/A",

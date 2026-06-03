@@ -145,7 +145,16 @@ class QTable:
                 if acc["q_count"] > 0:
                     for arm in self.ARMS:
                         self.Q[new_i][arm] = acc[arm] / acc["q_count"]
-                    self.N[new_i] = acc["n_sum"]
+                    # Reset visit counts to zero so Phase 2 must gather its own
+                    # fresh evidence before check_freeze_condition can fire.
+                    # Q-values are kept as warm-start priors from Phase 1, but
+                    # N[i]=0 means min_visits is not satisfied until new queries
+                    # actually arrive.  Without this reset, Phase 2 inherits
+                    # Phase 1's N counts, satisfies min_visits immediately, and
+                    # freezes on the very first Phase 2 query using stale Q-values
+                    # — including noise-dominated crossover buckets (margin <0.01)
+                    # that push θ* to 0.30 instead of the correct ~0.21-0.23.
+                    self.N[new_i] = 0
 
     def check_freeze_condition(
         self,
